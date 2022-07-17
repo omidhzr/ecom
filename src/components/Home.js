@@ -1,11 +1,13 @@
 import React from 'react'
+// import '../css/Home.css'
 import { Navbar } from './Navbar'
 import { Products } from './Products'
 
-export const Home = () => {
+
+export const Home = ({ user }) => {
     return (
-        <div>
-            <Navbar />
+        <div className = 'wrapper'>
+            <Navbar user={user}/>
             <Products />
         </div>
     )
