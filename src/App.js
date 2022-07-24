@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {Routes, Route} from 'react-router-dom'
 import {Home} from './components/Home'
 import {Signup} from './components/Signup'
@@ -8,27 +8,21 @@ import Profile from './components/Profile'
 import UpdateProfile from './components/UpdateProfile'
 import ProtectedRoute from './components/ProtectedRoute'
 import {AuthContextProvider} from './context/AuthContext'
-import {onAuthStateChanged} from 'firebase/auth'
-import {auth} from './config/Config'
+import AddProducts from './components/AddProducts'
 
 
 function App() {
-const [user, setUser] = useState({});
 
-useEffect(() => {
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser({displayName: currentUser?.displayName})
-}, []);
-})
     return (
       <AuthContextProvider>
         <Routes>
-          <Route exact path = '/' element = {<Home user={user.displayName}/>} />
+          <Route exact path = '/' element = {<Home />} />
           <Route path= '/signup' element= {<Signup/>} />
           <Route path= '/login' element= {<Login/>} />
           <Route path= '/forgot-password' element= {<ForgotPassword/>} />
           <Route path= '/profile' element= { <ProtectedRoute><Profile/></ProtectedRoute>} />
           <Route path= '/update-profile' element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} />
+          <Route path= '/add-products' element={<AddProducts />}/>
         </Routes>
         </AuthContextProvider>
     )
