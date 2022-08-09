@@ -1,15 +1,15 @@
-import React from "react";
-import { Icon } from "react-icons-kit";
-import { plus } from "react-icons-kit/feather/plus";
-import { minus } from "react-icons-kit/feather/minus";
-import { auth, db } from "../config/Config";
-import { deleteDoc, doc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import React from 'react';
+import { Icon } from 'react-icons-kit';
+import { plus } from 'react-icons-kit/feather/plus';
+import { minus } from 'react-icons-kit/feather/minus';
+import { auth, db } from '../config/config';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
-export const CartProduct = ({
-  cartProduct,
-  cartProductIncrease,
-  cartProductDecrease,
+export const CartProduct = ({ cartProduct, cartProductIncrease, cartProductDecrease }: {
+  cartProduct: any;
+  cartProductIncrease: any;
+  cartProductDecrease: any;
 }) => {
   const handleCartIncrease = () => {
     cartProductIncrease(cartProduct);
@@ -22,7 +22,7 @@ export const CartProduct = ({
   const handleCartDelete = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        deleteDoc(doc(db, "Cart " + user.uid, cartProduct.ID));
+        deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
         // .then(() => {
         //   console.log("successfully deleted");
         // });
@@ -43,7 +43,7 @@ export const CartProduct = ({
         <div className="action-btns minus" onClick={handleCartDecrease}>
           <Icon icon={minus} size={20} />
         </div>
-        <div>{cartProduct.qty}</div>
+        <div className="quantity">{cartProduct.qty}</div>
         <div className="action-btns plus" onClick={handleCartIncrease}>
           <Icon icon={plus} size={20} />
         </div>

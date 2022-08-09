@@ -1,8 +1,8 @@
 // not used yet
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth, db } from "../config/Config";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import { auth, db } from '../config/config';
+import { onSnapshot, collection } from 'firebase/firestore';
 
 export default function GetNumberOfCartItems() {
   //use state to set totalProducts
@@ -10,7 +10,7 @@ export default function GetNumberOfCartItems() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        onSnapshot(collection(db, "Cart " + user.uid), (snapshot) => {
+        onSnapshot(collection(db, 'Cart ' + user.uid), (snapshot) => {
           // console.log(snapshot);
           const qty = snapshot.docs.length;
           // console.log(qty);

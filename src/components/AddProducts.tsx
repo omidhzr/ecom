@@ -1,49 +1,55 @@
-import React, { useState } from "react";
-import { storage, db } from "../config/Config";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
-import ProgressBar from "react-bootstrap/ProgressBar";
+import React, { useState } from 'react';
+import { storage, db } from '../config/config';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc } from 'firebase/firestore';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const AddProducts = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
-  const [imageError, setImageError] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
-  const [uploadError, setUploadError] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
+  // define state for image with type of file
+  const [image, setImage] = useState<File | null>(null);
+  // const [image, setImage] = useState<File>(null);
+  const [imageError, setImageError] = useState<string>('');
+  const [successMsg, setSuccessMsg] = useState<string>('');
+  const [uploadError, setUploadError] = useState<string>('');
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState<string>('');
 
-  const types = ["image/jpg", "image/jpeg", "image/png", "image/PNG"];
+  const types = ['image/jpg', 'image/jpeg', 'image/png', 'image/PNG'];
 
-  const handleProductImg = (e) => {
-    let selectedFile = e.target.files[0];
+  const handleProductImg = (e: any) => {
+    const selectedFile = e.target.files[0];
     if (selectedFile) {
       if (selectedFile && types.includes(selectedFile.type)) {
         setImage(selectedFile);
-        setImageError("");
+        setImageError('');
       } else {
         setImage(null);
-        setImageError("please select a valid image file type (png or jpg)");
+        setImageError('please select a valid image file type (png or jpg)');
       }
     } else {
-      setImageError("please select your file");
+      setImageError('please select your file');
     }
   };
 
-  const handleAddProducts = (e) => {
+  const handleAddProducts = (e: any) => {
     e.preventDefault();
     // console.log(title, description, price);
     // console.log(image);
 
-    const storageRef = ref(storage, "/product-images/" + image.name);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+    const storageRef = ref(storage, '/product-images/' + image!.name);
+    // uploadBytesResumable using image file and storageRef
+    const uploadTask = uploadBytesResumable(storageRef, image!);
+    // const uploadTask = uploadBytesResumable(storageRef, image);
 
     //   const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
-      "state_changed",
+      'state_changed',
       (snapshot) => {
         const prog = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgress(prog);
@@ -53,26 +59,30 @@ const AddProducts = () => {
       (error) => setUploadError(error.message),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          addDoc(collection(db, "Products"), {
-            title: title,
-            description: description,
+          addDoc(collection(db, 'Products'), {
+            title,
+            description,
             price: Number(price),
-            url: url,
+            url
           })
             .then(() => {
               setUploading(false);
-              setSuccessMsg("Product added successfully");
-              setTitle("");
-              setDescription("");
-              setPrice("");
-              document.getElementById("file").value = "";
-              setImageError("");
-              setUploadError("");
+              setSuccessMsg('Product added successfully');
+              setTitle('');
+              setDescription('');
+              setPrice(0);
+              // empty html input file element
+              const fileInput = document.getElementById('file') as HTMLInputElement;
+              fileInput.value = '';
+
+              // document.getElementById("file").innerText = "";
+              setImageError('');
+              setUploadError('');
               setTimeout(() => {
-                setSuccessMsg("");
+                setSuccessMsg('');
               }, 3000);
             })
-            .catch((error) => setUploadError(error.message));
+            .catch((error: any) => setUploadError(error.message));
         });
       }
     );
@@ -82,9 +92,12 @@ const AddProducts = () => {
     <div className="container">
       <br></br>
       <br></br>
-      <h1>Add Products</h1>
+      <h3>Add Products</h3>
       <hr></hr>
       {successMsg && <div className="success-msg">{successMsg}</div>}
+      <br/>
+      {error ? <p>{error}</p> : null}
+      <br/>
       <form
         autoComplete="off"
         className="form-group"
@@ -113,7 +126,7 @@ const AddProducts = () => {
           type="number"
           className="form-control"
           required
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(Number(e.target.value))}
           value={price}
         ></input>
         <br></br>
@@ -139,7 +152,7 @@ const AddProducts = () => {
           </div>
         )}
         <br />
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <button
             type="submit"
             className="btn btn-success btn-md"

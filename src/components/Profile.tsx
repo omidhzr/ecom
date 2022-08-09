@@ -1,32 +1,38 @@
-import React, { useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
-import { UserAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+// import { User as FirebaseUser } from 'firebase/auth'
+import { Card, Button, Alert } from 'react-bootstrap';
+import { UserAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 // import {GetCurrentUser} from "../context/AuthContext"
 
 const Profile = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const { user, logOut, removeUser } = UserAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate()
 
-  async function handleLogout() {
-    setError("");
+  // const [user, setUser] = useState<FirebaseUser | null>(null);
+  // const user = getCurrentUser();
+  // console.log(user);
+  // setUser(getCurrentUser());
+
+  async function handleLogout () {
+    setError('');
 
     try {
       await logOut();
-      window.location.href = "/";
+      window.location.href = '/';
     } catch {
-      setError("Failed to log out");
+      setError('Failed to log out');
     }
   }
-  async function deleteAccount() {
-    setError("");
+  async function deleteAccount () {
+    setError('');
 
     try {
       await removeUser(user);
-      window.location.href = "/";
-    } catch (error) {
-      setError("Failed to Delete the user " + error.message);
+      window.location.href = '/';
+    } catch (error: any) {
+      setError('Failed to Delete the user ' + error.message);
     }
   }
 
@@ -36,9 +42,13 @@ const Profile = () => {
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Name:</strong> {user.displayName}
+
+          <strong>Name:</strong> {// @ts-ignore
+          user!.displayName}
           <br />
-          <strong>Email:</strong> {user.email}
+
+          <strong>Email:</strong> {// @ts-ignore
+          user!.email}
           <Link
             to="/update-profile"
             className="btn btn-outline-dark w-100 mt-2"
@@ -52,7 +62,7 @@ const Profile = () => {
           className="btn btn-dark mt-2"
           onClick={() => {
             const confirmBox = window.confirm(
-              "Do you really want to delete this account?"
+              'Do you really want to delete this account?'
             );
             if (confirmBox === true) {
               deleteAccount();

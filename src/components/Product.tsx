@@ -1,15 +1,15 @@
-import React from "react";
-import { Icon } from "react-icons-kit";
-import { ecommerce_basket_plus } from "react-icons-kit/linea/ecommerce_basket_plus";
-import { cartPlus } from "react-icons-kit/fa/cartPlus";
+import React from 'react';
+import { Icon } from 'react-icons-kit';
+// import { ecommerce_basket_plus } from 'react-icons-kit/linea/ecommerce_basket_plus'
+import { cartPlus } from 'react-icons-kit/fa/cartPlus';
 
-export const Product = ({ product, addToCart }) => {
+export const Product = ({ product, addToCart }: { product: any, addToCart: any }) => {
   const handleAddToCart = async () => {
     try {
       await addToCart(product);
-    } catch (error) {
-      // console.log(error.message);
-      window.location.href = "/login";
+    } catch (error: any) {
+      console.log(error.message);
+      window.location.href = '/login';
     }
     // console.log(
     //   product?.title + " with price: " + product?.price + " added to your cart!"
@@ -24,7 +24,7 @@ export const Product = ({ product, addToCart }) => {
       <div className="product-text description">{product.description}</div>
       <div className="product-text price">$ {product.price}</div>
       <div className="btn btn-dark btn-md cart-btn" onClick={handleAddToCart}>
-        ADD TO CART
+        ADD TO <Icon className="cart-btn cart-icon" icon={cartPlus} size={30}></Icon>
       </div>
       {/* <div className="cart-btn" onClick={handleAddToCart}>
         <Icon icon={cartPlus} size={32}></Icon>

@@ -1,3 +1,6 @@
 {
-  "recommendations": ["GitHub.copilot"]
+  "recommendations": [
+    "github.copilot",
+    "dbaeumer.vscode-eslint"
+  ]
 }

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Navbar } from "./Navbar";
-import { auth, db } from "../config/Config";
-import { onSnapshot, collection, setDoc, doc } from "firebase/firestore";
-import { CartProducts } from "./CartProducts";
-import { onAuthStateChanged } from "firebase/auth";
-import GetCurrentUser from "./GetCurrentUser";
+import React, { useState, useEffect } from 'react';
+import { Navbar } from './Navbar';
+import { auth, db } from '../config/config';
+import { onSnapshot, collection, setDoc, doc } from 'firebase/firestore';
+import { CartProducts } from './CartProducts';
+import { onAuthStateChanged } from 'firebase/auth';
+import GetCurrentUser from './GetCurrentUser';
 
 const Cart = () => {
   // state of cart products
   const [cartProducts, setCartProducts] = useState([]);
+  // const [loading, setLoading] = useState < boolean > (false);
 
   const user = GetCurrentUser();
   // console.log("Cart: user> " + user);
@@ -16,17 +17,18 @@ const Cart = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        onSnapshot(collection(db, "Cart " + user.uid), (snapshot) => {
-          const newCartProduct = snapshot.docs.map((doc) => ({
+        onSnapshot(collection(db, 'Cart ' + user.uid), (snapshot) => {
+          // eslint-disable-next-line no-empty-pattern
+          const newCartProduct: any  = snapshot.docs.map((doc) => ({
             ID: doc.id,
-            ...doc.data(),
+            ...doc.data()
           }));
 
           setCartProducts(newCartProduct);
           // console.log("cart products: " + cartProducts);
         });
       } else {
-        console.log("user is not signed in to retrieve cart");
+        console.log('user is not signed in to retrieve cart');
       }
     });
   }, []);
@@ -35,10 +37,10 @@ const Cart = () => {
   // console.log(cartProducts);
 
   // global variable
-  let Product;
+  let Product: any;
 
   // cart product increase function
-  const cartProductIncrease = (cartProduct) => {
+  const cartProductIncrease = (cartProduct: any) => {
     // console.log(cartProduct);
     Product = cartProduct;
     Product.qty = Product.qty + 1;
@@ -46,20 +48,20 @@ const Cart = () => {
     // updating in database
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        await setDoc(doc(db, "Cart " + user.uid, cartProduct.ID), Product);
+        await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
         // .then(
         //   () => {
         //     console.log("successfully increased");
         //   }
         // );
       } else {
-        console.log("user is not logged in to increment");
+        console.log('user is not logged in to increment');
       }
     });
   };
 
   // cart product decrease functionality
-  const cartProductDecrease = (cartProduct) => {
+  const cartProductDecrease = (cartProduct: any) => {
     Product = cartProduct;
     if (Product.qty > 1) {
       Product.qty = Product.qty - 1;
@@ -68,12 +70,12 @@ const Cart = () => {
 
       onAuthStateChanged(auth, async (user) => {
         if (user) {
-          await setDoc(doc(db, "Cart " + user.uid, cartProduct.ID), Product);
+          await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
           // .then(() => {
           //   console.log("successfully decremented");
           // });
         } else {
-          console.log("user is not logged in to decrement");
+          console.log('user is not logged in to decrement');
         }
       });
     }
@@ -81,6 +83,8 @@ const Cart = () => {
 
   // set totalProducts in Navbar
   const totalProducts = cartProducts.reduce(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     (total, cartProduct) => total + cartProduct.qty,
     0
   );
@@ -102,9 +106,12 @@ const Cart = () => {
         </div>
       )}
       {cartProducts.length < 1 && (
-        <div className="container-fluid">No products to show</div>
+        <div className="container-fluid">
+          <h3 className="text-center">Either loading or the cart is empty</h3>
+        </div>
       )}
     </>
   );
 };
+
 export default Cart;

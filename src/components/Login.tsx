@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
+import React, { useState } from 'react';
+import { Alert } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext';
 
-export const Login = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { signIn } = UserAuth();
 
-  const login = async (e) => {
+  const login = async (e: any) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
       await signIn(email, password);
-      navigate("../");
-    } catch (error) {
+      navigate('../');
+    } catch (error: any) {
       setError(error.message);
     }
   };
@@ -58,7 +58,7 @@ export const Login = (props) => {
       </span>
       <br />
       <span>
-        Forgott your password?{" "}
+        Forgott your password?{' '}
         <Link to="../forgot-password">Forgot my password!</Link>
       </span>
     </div>

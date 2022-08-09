@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../images/logo.svg";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../images/logo.svg';
 // import { UserAuth } from '../context/AuthContext'
-import { Icon } from "react-icons-kit";
+import { Icon } from 'react-icons-kit';
 // import {user as profileIcon} from 'react-icons-kit/typicons/user'
-import { user as profileIcon } from "react-icons-kit/feather/user";
-import { shoppingCart } from "react-icons-kit/typicons/shoppingCart";
-import { ShoppingCart } from "../components/ShoppingCart";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Profile from "./Profile";
+import { user as profileIcon } from 'react-icons-kit/feather/user';
+import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
+// import { ShoppingCart } from './ShoppingCart'
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Profile from './Profile';
 
-export const Navbar = ({ user, totalProducts }) => {
+export const Navbar = ({ user, totalProducts }: {user: any, totalProducts: any }) => {
   // const { logOut } = UserAuth();
   // const navigate = useNavigate();
   // handle logout
@@ -24,11 +24,11 @@ export const Navbar = ({ user, totalProducts }) => {
   //     }
 
   //     }
-  const [shoow, setShow] = useState(false);
+  // const [shoow, setShow] = useState(false)
   const [showProfile, setShowProfile] = useState(false);
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true)
   const handleShowProfile = () => setShowProfile(true);
-  const handleClose = () => setShow(false);
+  // const handleClose = () => setShow(false)
   const handleCloseProfile = () => setShowProfile(false);
 
   return (
@@ -57,7 +57,7 @@ export const Navbar = ({ user, totalProducts }) => {
               {user}
             </Icon>
             <Offcanvas
-              placement={"end"}
+              placement={'end'}
               show={showProfile}
               onHide={handleCloseProfile}
               responsive="lg"
@@ -77,7 +77,7 @@ export const Navbar = ({ user, totalProducts }) => {
                 icon={shoppingCart}
                 size={24}
                 onClick={() => {
-                  window.location.href = "/cart";
+                  window.location.href = '/cart';
                 }}
               />
             </div>

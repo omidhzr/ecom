@@ -1,33 +1,38 @@
-import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
-import { UserAuth, AuthContextProvider } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React, { MutableRefObject, useRef, useState } from 'react';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { UserAuth, AuthContextProvider } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UpdateProfile = () => {
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  const emailRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const passwordConfirmRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const nameRef = useRef() as MutableRefObject<HTMLInputElement>;
   const { user, updatePass, updateEmajl, updateUser } = UserAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  // const [user, setUser] = useState<any>(null);
+  // const [user, setUser] = useState<firebase.User | null>(null);
 
-  function handleSubmit(e) {
+  // setUser(getCurrentUser());
+
+  function handleSubmit (e: any) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match");
+      return setError('Passwords do not match');
     }
 
     const promises = [];
     setLoading(true);
-    setError("");
-
-    if (nameRef.current.value !== user.displayName) {
+    setError('');
+    // @ts-ignore
+    if (nameRef.current.value !== user!.displayName) {
       promises.push(updateUser(nameRef.current.value));
     }
-
-    if (emailRef.current.value !== user.email) {
+    // @ts-ignore
+    if (emailRef.current.value !== user!.email) {
       promises.push(updateEmajl(emailRef.current.value));
     }
     if (passwordRef.current.value) {
@@ -36,10 +41,10 @@ const UpdateProfile = () => {
 
     Promise.all(promises)
       .then(() => {
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
-        setError("Failed to update the account! " + error.message);
+        setError('Failed to update the account! ' + error.message);
       })
       .finally(() => {
         setLoading(false);
@@ -60,7 +65,9 @@ const UpdateProfile = () => {
                   type="text"
                   ref={nameRef}
                   required
-                  defaultValue={user?.displayName}
+                  // ignore the error
+                  // @ts-ignore
+                  defaultValue={user!.displayName!}
                 />
               </Form.Group>
               <Form.Group id="email">
@@ -69,7 +76,9 @@ const UpdateProfile = () => {
                   type="email"
                   ref={emailRef}
                   required
-                  defaultValue={user?.email}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  defaultValue={user!.email!}
                 />
               </Form.Group>
               <Form.Group id="password">

@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Card, Alert } from "react-bootstrap";
-import { UserAuth } from "../context/AuthContext";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
+import { UserAuth } from '../context/AuthContext';
 
-export const Signup = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export const Signup = () => {
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
-  const { createUser, updateUser } = UserAuth();
+  const { createUser } = UserAuth();
 
-  const Register = async (e) => {
+  const Register = async (e: any) => {
     e.preventDefault();
-    setError("");
+    setError('');
     try {
       await createUser(name, email, password);
       // updateUser(name);
-      navigate("../");
-    } catch (error) {
+      navigate('../');
+    } catch (error: any) {
       setError(error.message);
     }
   };
