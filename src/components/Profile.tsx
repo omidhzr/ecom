@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-// import { User as FirebaseUser } from 'firebase/auth'
+import React, { useContext, useState } from 'react';
 import { Card, Button, Alert } from 'react-bootstrap';
 import { UserAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-// import {GetCurrentUser} from "../context/AuthContext"
+import { DarkModeContext } from '../context/DarkModeContext';
 
 const Profile = () => {
   const [error, setError] = useState('');
   const { user, logOut, removeUser } = UserAuth();
-  // const navigate = useNavigate()
+  // const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
 
-  // const [user, setUser] = useState<FirebaseUser | null>(null);
-  // const user = getCurrentUser();
-  // console.log(user);
-  // setUser(getCurrentUser());
+  if (darkMode) {
+    // make the root dark
+    document.body.className = "dark";
+  } else {
+    document.body.className = "";
+  }
 
   async function handleLogout () {
     setError('');
@@ -77,7 +79,6 @@ const Profile = () => {
         </Button>
         <br />
 
-        {/* <Link to="/" className='btn btn-secondary mt-2'>Cancel</Link> */}
       </div>
     </>
   );

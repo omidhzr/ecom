@@ -13,10 +13,7 @@ const UpdateProfile = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  // const [user, setUser] = useState<any>(null);
-  // const [user, setUser] = useState<firebase.User | null>(null);
 
-  // setUser(getCurrentUser());
 
   function handleSubmit (e: any) {
     e.preventDefault();

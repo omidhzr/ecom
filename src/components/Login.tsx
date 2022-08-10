@@ -14,8 +14,10 @@ export const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      await signIn(email, password);
-      navigate('../');
+      await signIn(email, password).then(() => {
+        navigate('/');
+      });
+      // navigate('../');
     } catch (error: any) {
       setError(error.message);
     }

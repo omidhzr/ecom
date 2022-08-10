@@ -1,3 +1,5 @@
+// Work in progress
+//Is not used yet
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import React from 'react';
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Navbar } from './Navbar';
-import { Products } from './Products';
+import { MemoProducts, Products } from './Products';
 import { auth, db } from '../config/config';
 import {
   onSnapshot,
@@ -12,22 +12,25 @@ import {
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import { DarkModeContext } from '../context/DarkModeContext';
 
 export const Home = () => {
   const navigate = useNavigate();
-  // state of totalProducts
   const [totalProducts, setTotalProducts] = useState<number>(0);
-  // state of products
   const [products, setProducts] = useState<never[]>([]);
-  // const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
-  // const [docId, setDocId] = useState<number>(0);
-  // const [docData, setDocData] = useState([]);
   const { user } = UserAuth();
-  // console.log("Home: user> " + user?.displayName);
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+
+  if (darkMode) {
+    // make the root dark
+    document.body.className = "dark";
+  } else {
+    document.body.className = "";
+  }
 
   // getting current user uid
   function GetUserUid () {
-    const [uid, setUid] = useState('');
+    const [uid, setUid] = useState<string>('');
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -40,24 +43,6 @@ export const Home = () => {
 
   const uid = GetUserUid();
   // console.log('uid: '+ uid);
-
-  // getting current user function
-  // function GetCurrentUser() {
-  //   const [user, setUser] = useState(null);
-  //   useEffect(() => {
-  //     onAuthStateChanged(auth, (user) => {
-  //       if (user) {
-  //         setUser(user?.displayName);
-  //       } else {
-  //         setUser(null);
-  //       }
-  //     });
-  //   }, []);
-  //   return user;
-  // }
-
-  // const user = GetCurrentUser();
-  // console.log(user);
 
   // getting products function
   const getProducts = async () => {
@@ -97,78 +82,13 @@ export const Home = () => {
   // global variable
   let Product;
 
-  // add to cart
-  // const addToCart = async (product) => {
-  //   console.log("product to add > " + product.ID);
-
-  //   // Produkt = product;
-  //   // check if user is logged in
-  //   if (user.uid !== null) {
-  //     // console.log(product);
-  //     // check if product is already in user's cart and update qty if it is already in cart
-
-  //     // try {
-  //       // disable typescript loader for this block
-
-  //     const q: any = query(
-  //       collection(db, "Cart " + user?.uid),
-  //       where("ID", "==", product.ID)
-  //     );
-
-  //     const sub = onSnapshot(q, (querySnapshot) => {
-  //       // console.log("querySnapshot: " + querySnapshot.docs[0].data().ID);
-  //       querySnapshot.forEach(function (dok) {
-  //         setDocId(dok.id);
-  //         console.log(dok.id, " => ", dok.data());
-  //       });
-  //     });
-  //     const dk = sub();
-  //     console.log("new sub docId: " + dk);
-  //     console.log("Home.js> docId: " + docId);
-  //     if (docId === null) {
-  //       //if product is not in cart, add it
-  //       const newDoc = await addDoc(collection(db, "Cart " + user.uid), {
-  //         ID: product.ID,
-  //         title: product.title,
-  //         price: Number(product.price),
-  //         qty: Number(1),
-  //         total: Number(product.price),
-  //       });
-  //       console.log("newDoc: " + newDoc.id);
-  //     }
-  //     // if product is not in cart, add it to cart
-  //     else {
-  //       const docRef = doc(db, "Cart " + user.uid, docId);
-
-  //       // Produkt["total"] = product.qty * product.price;
-  //       // console.log("Produk tot price issssss: " + Produkt["total"]);
-
-  //       // Atomically increment the qty of the product in the cart
-  //       await updateDoc(docRef, {
-  //         qty: increment(1),
-  //         total: increment(product.price),
-  //       });
-  //       // const docRef = doc(db, "Cart " + uid);
-  //     }
-  //   } else {
-  //     // if user is not logged in, redirect to login
-  //     navigate("/login");
-  //   }
-  // };
-
   const addToKart = async (product: any) => {
-    // console.log('user: ' + user.uid);
     if (uid !== null && uid !== undefined && uid !== '') {
-      // console.log(product);
       Product = product;
       Product.qty = 1;
       Product.TotalProductPrice = Product.qty * Product.price;
       await setDoc(doc(db, 'Cart ' + uid, product.ID), Product);
-      // .then(
-      //   () => {
-      //     console.log("successfully added to cart");
-      //   }
-      // );
+
     } else {
       navigate('/login');
     }
@@ -180,14 +100,16 @@ export const Home = () => {
 
   return (
     <>
+    {/* //if dark mode is enabled then add dark class to body
+    {darkMode ? document.body.classList.add('dark') : document.body.classList.remove('dark')} */}
       <Navbar user={user} totalProducts={totalProducts} />
       <br></br>
       {products.length > 0 && (
         <div className="container-fluid">
           <h1 className="text-center">Products</h1>
           <div className="products-box">
-
-            <Products products={products} addToCart={addToKart} />
+            <MemoProducts products={products} addToCart={addToKart} />
+            {/* <Products products={products} addToCart={addToKart} /> */}
           </div>
         </div>
       )}

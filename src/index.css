@@ -48,8 +48,8 @@ body {
   align-items: center;
   flex-direction: row;
   padding: 7px 25px;
+  /* background-color: #f1f5fa; */
 }
-
 .navbox .left-side {
   display: flex;
   flex-direction: row;
@@ -60,6 +60,11 @@ body {
 .navbox .left-side img {
   height: 100%;
   width: 100%;
+}
+
+/* //add some padding for the right-side span elements */
+.navbox .right-side span {
+  padding: 0 4px;
 }
 
 .navbox .right-side {
@@ -111,6 +116,14 @@ body {
 
 .cart-btn {
   transition: 0.3s ease-in-out;
+}
+/* //make cart-btn #D6D6D7 when body class is dark */
+.dark .cart-btn {
+  background-color: #A6ABAF;
+}
+/* // make cart-btn on hover #D6D6D7 when body class is dark */
+.dark .cart-btn:hover {
+  background-color: #A6ABAF;
 }
 
 .link {
@@ -200,7 +213,7 @@ body {
   font-weight: 500;
   position: absolute;
   top: -10px;
-  right: 12px;
+  right: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -252,4 +265,23 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.dark {
+  background-color:#323639;
+  color: #fff;
+}
+/* //make the container-fluid background-color #323639 when body class is dark */
+.dark .container-fluid {
+  background-color: #323639;
+}
+
+.dark .product:hover {
+  background-color: #4b5055;
+}
+
+/* //make the offcanvas modal dark when body class is dark and modal is open*/ */
+.dark #offcanvas {
+  background-color: #323639;
+}
+
 

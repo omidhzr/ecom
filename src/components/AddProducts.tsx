@@ -42,11 +42,7 @@ const AddProducts = () => {
     // console.log(image);
 
     const storageRef = ref(storage, '/product-images/' + image!.name);
-    // uploadBytesResumable using image file and storageRef
     const uploadTask = uploadBytesResumable(storageRef, image!);
-    // const uploadTask = uploadBytesResumable(storageRef, image);
-
-    //   const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
       'state_changed',
@@ -68,9 +64,9 @@ const AddProducts = () => {
             .then(() => {
               setUploading(false);
               setSuccessMsg('Product added successfully');
-              setTitle('');
-              setDescription('');
-              setPrice(0);
+              setTitle('Product ');
+              setDescription('Lorem ipsum dolor sit amet');
+              setPrice(10);
               // empty html input file element
               const fileInput = document.getElementById('file') as HTMLInputElement;
               fileInput.value = '';

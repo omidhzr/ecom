@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Navbar } from './Navbar';
 import { auth, db } from '../config/config';
 import { onSnapshot, collection, setDoc, doc } from 'firebase/firestore';
 import { CartProducts } from './CartProducts';
 import { onAuthStateChanged } from 'firebase/auth';
 import GetCurrentUser from './GetCurrentUser';
+import { DarkModeContext } from '../context/DarkModeContext';
 
 const Cart = () => {
   // state of cart products
   const [cartProducts, setCartProducts] = useState([]);
   // const [loading, setLoading] = useState < boolean > (false);
-
+  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
   const user = GetCurrentUser();
   // console.log("Cart: user> " + user);
 
@@ -91,7 +92,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar user={user} totalProducts={totalProducts} />
+      <Navbar user={user} totalProducts={totalProducts}/>
       <br></br>
       {cartProducts.length > 0 && (
         <div className="container-fluid">
@@ -107,7 +108,7 @@ const Cart = () => {
       )}
       {cartProducts.length < 1 && (
         <div className="container-fluid">
-          <h3 className="text-center">Either loading or the cart is empty</h3>
+          <h3 className="text-center">Loading...</h3>
         </div>
       )}
     </>

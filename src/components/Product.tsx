@@ -26,9 +26,6 @@ export const Product = ({ product, addToCart }: { product: any, addToCart: any }
       <div className="btn btn-dark btn-md cart-btn" onClick={handleAddToCart}>
         ADD TO <Icon className="cart-btn cart-icon" icon={cartPlus} size={30}></Icon>
       </div>
-      {/* <div className="cart-btn" onClick={handleAddToCart}>
-        <Icon icon={cartPlus} size={32}></Icon>
-      </div> */}
     </div>
   );
 };

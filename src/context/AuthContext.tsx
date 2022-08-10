@@ -12,28 +12,33 @@ import {
   sendEmailVerification,
   updatePassword,
   updateEmail,
-  deleteUser
+  deleteUser,
+  UserCredential,
+  User
 } from 'firebase/auth';
 
+// set types for context based on the functions we need to use in the app
+type AuthContextType = {
+  loggedIn: boolean;
+  user: null | any;
+  createUser: (name: string, email: string, password: string) => Promise < void > ;
+  signIn: (email: string, password: string) => Promise<void> ;
+  logOut: () => Promise < void > ;
+  updateEmajl: (email: string) => Promise < void > ;
+  updatePass: (password:string) => Promise < void > ;
+  forgotPassword: (email: string) => Promise < void > ;
+  updateUser: (user: string) => Promise < void > ;
+  removeUser: (user: any) => Promise < void > ;
+  getCurrentUser: () => Promise < void > ;
+  // sendEmailVerification: () => Promise < void > ;
+};
+
 // creating context
-const UserContext = createContext({
-  // set default values with respective types for context based on the functions we need to use in the app
-  user: null,
-  createUser: (n:string, e:string, p:string) => {},
-  updateUser: (user: string) => {},
-  signIn: (e:string, p:string) => {},
-  logOut: () => {},
-  forgotPassword: (e: string) => {},
-  // sendEmailVerification: () => {},
-  updatePass: (s:string) => {},
-  updateEmajl: (e: string) => {},
-  removeUser: (u: any) => {},
-  getCurrentUser: () => {}
-});
+const UserContext = createContext( {} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: any) => {
-  // define setUser hook with type any
-  const [user, setUser] = useState<null |any>(null);
+  const [user, setUser] = useState < any > (null);
+  const [loggedIn, setUserLoggedIn] = useState < boolean > (false);
 
   const createUser = async (name: string, email: string, password: string) => {
     return await createUserWithEmailAndPassword(auth, email, password).then(
@@ -41,30 +46,32 @@ export const AuthContextProvider = ({ children }: any) => {
         // Signed in
         const user = userCredential.user;
         updateProfile(user, { displayName: name });
-        // console.log(user.displayName);
-        // sendEmailVerification(user);
       }
     );
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   const updateUser = async (name: string) => {
     return await updateProfile(user, { displayName: name });
 
-    // return await updateProfile(auth.currentUser, { displayName: name });
-    // .then(() => {
-    //     console.log(auth.currentUser.displayName);
-    // });
   };
 
   const signIn = async (email: string, password:string) => {
-    return await signInWithEmailAndPassword(auth, email, password);
+    try {
+      return (await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        setUserLoggedIn(true);
+      }
+      ));
+    } catch (error: any) {
+      console.log(error.message);
+      
+    }
   };
+    
 
   const logOut = async () => {
-    return await signOut(auth);
+    return await signOut(auth).then(() => {setUserLoggedIn(false);});
   };
 
   const forgotPassword = async (email:string) => {
@@ -84,25 +91,22 @@ export const AuthContextProvider = ({ children }: any) => {
   };
 
   const getCurrentUser: any = () => {
-    // define setUser hook with type of user
-    // const [user, setUser] = useState<any>(null);
-    // const [user, setUser] = useState(null);
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // setUser(user);
-        return user;
+        setUser(user);
+        setUserLoggedIn(true);
       } else {
         setUser(null);
+        setUserLoggedIn(false);
       }
     });
     // }, []);
-    // return user;
+    return user;
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      //   console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
@@ -110,11 +114,12 @@ export const AuthContextProvider = ({ children }: any) => {
     };
   }, []);
 
+
   return (
   // return the context provider with the values we want to use in the app
-
     <UserContext.Provider
       value={{
+        loggedIn,
         createUser,
         user,
         updateUser,
@@ -125,7 +130,6 @@ export const AuthContextProvider = ({ children }: any) => {
         forgotPassword,
         removeUser,
         getCurrentUser
-
       }}
     >
       {children}

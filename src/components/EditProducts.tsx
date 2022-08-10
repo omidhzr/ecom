@@ -112,7 +112,7 @@ const EditProducts = () => {
     <div><h3>Edit</h3>
       <br/>
       {successMsg && <div className="success-msg">{successMsg}</div>}
-      {loading ? (//make a loading spinner here using react bootstrap spinner component
+      {loading ? (
         <>
           <div>Loading...</div>
           <br/>
