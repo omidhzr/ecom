@@ -6,16 +6,6 @@
   box-sizing: border-box;
 }
 
-/* [data-theme="light"] {
-  --background-color:white;
-  --color:black;
-}
-
-[data-theme="dark"] {
-  --background-color:#323639;
-  --color:white;
-} */
-
 html,body{
   background-color:white;
   width: 100%;
@@ -23,11 +13,6 @@ html,body{
   font-family: "Open Sans", serif;
 
 }
-/* .container-fluid {
-  background-color:var(--background-color);
-  color:var(--color);
-
-} */
 
 @media (max-width: 768px) {
   .mybtn {
@@ -304,19 +289,5 @@ html,body{
   background-color: #0A0924;
 }
 
-
-/* // add css for the cart table so that the image is not too big */
-.cart-product {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.cart-product .cart-product-img {
-  width: 100px;
-  height: 100px;
-}
 
 
