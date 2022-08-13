@@ -242,7 +242,8 @@ const EditProducts = () => {
               </tr>
             ))}
         </tbody>
-      </table></div>
+      </table>
+    </div>
 
   );
 };

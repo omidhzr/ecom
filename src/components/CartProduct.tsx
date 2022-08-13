@@ -31,6 +31,7 @@ export const CartProduct = ({ cartProduct, cartProductIncrease, cartProductDecre
   };
 
   return (
+
     <div className="product">
       <div className="product-img">
         <img src={cartProduct.url} alt="product-img" />

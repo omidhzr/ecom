@@ -1,21 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Card, Button, Alert } from 'react-bootstrap';
 import { UserAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
-import { DarkModeContext } from '../context/DarkModeContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [error, setError] = useState('');
   const { user, logOut, removeUser } = UserAuth();
-  // const navigate = useNavigate();
-  const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
-
-  if (darkMode) {
-    // make the root dark
-    document.body.className = "dark";
-  } else {
-    document.body.className = "";
-  }
+  const navigate = useNavigate();
 
   async function handleLogout () {
     setError('');
@@ -40,7 +31,7 @@ const Profile = () => {
 
   return (
     <>
-      <Card>
+      <Card className='profile-card'>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -51,12 +42,12 @@ const Profile = () => {
 
           <strong>Email:</strong> {// @ts-ignore
           user!.email}
-          <Link
-            to="/update-profile"
-            className="btn btn-outline-dark w-100 mt-2"
+          <Button
+            onClick={()=> navigate("/update-profile")}
+            className="btn btn-dark w-100 mt-2"
           >
             Update Profile
-          </Link>
+          </Button>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">

@@ -16,7 +16,7 @@ const Admin = ({}) => {
   const [editProductsButtonClicked, setEditProducts] = useState < boolean > (false);
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <br></br>
         <br></br>

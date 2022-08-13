@@ -14,9 +14,8 @@ export const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      await signIn(email, password).then(() => {
+      await signIn(email, password);
         navigate('/');
-      });
       // navigate('../');
     } catch (error: any) {
       setError(error.message);
@@ -66,3 +65,6 @@ export const Login = () => {
     </div>
   );
 };
+
+
+
