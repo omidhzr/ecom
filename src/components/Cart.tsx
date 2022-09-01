@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './Navbar';
 import { auth, db } from '../config/config';
-import { onSnapshot, collection, setDoc, doc, deleteDoc } from 'firebase/firestore';
-import { CartProducts } from './CartProducts';
+import { onSnapshot, collection } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import GetCurrentUser from './GetCurrentUser';
+import { Link, useNavigate } from 'react-router-dom';
+import { CartProduct } from './CartProduct';
 
 const Cart = () => {
   // state of cart products
   const [cartProducts, setCartProducts] = useState([]);
-  // const [loading, setLoading] = useState < boolean > (false);
-  const user = GetCurrentUser();
-  // console.log("Cart: user> " + user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -35,75 +32,62 @@ const Cart = () => {
   //   CartProducts();
   // console.log(cartProducts);
 
-  // global variable
-  let Product: any;
-
-  // cart product increase function
-  const cartProductIncrease = (cartProduct: any) => {
-    // console.log(cartProduct);
-    Product = cartProduct;
-    Product.qty = Product.qty + 1;
-    Product.totalProductPrice = Product.qty * Product.price;
-    // updating in database
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
-        // .then(
-        //   () => {
-        //     console.log("successfully increased");
-        //   }
-        // );
-      } else {
-        console.log('user is not logged in to increment');
-      }
-    });
-  };
-
-  // cart product decrease functionality
-  const cartProductDecrease = (cartProduct: any) => {
-    Product = cartProduct;
-    // check if qty is less than 1 if yes then delete the product
-    if (Product.qty <= 1) {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          await deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
-
-        } else {
-          console.log('user is not logged in to delete');
-        }
-      });
-    } else {
-      Product.qty = Product.qty - 1;
-      Product.totalProductPrice = Product.qty * Product.price;
-      // updating in database
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
-
-        } else {
-          console.log('user is not logged in to decrement');
-        }
-      });
-    }
-  };
-
   return (
     <>
       <br></br>
       {cartProducts.length > 0 && (
-        <div className="container-fluid">
-          <h1 className="text-center">Cart</h1>
-          <div className="products-box">
-            <CartProducts
-              cartProducts={cartProducts}
-              cartProductIncrease={cartProductIncrease}
-              cartProductDecrease={cartProductDecrease}
-            />
+      <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card">
+              <div className="card-header">
+                <h4>Cart</h4>
+              </div>
+              <div className="card-body">
+                <div className="table-responsive">
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Product Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cartProducts.map((product: any) => (
+                        <CartProduct key={product.ID} cartProduct={product} />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="card-footer">
+                <div className="row">
+                  <div className="col-md-12">
+
+                    <div>
+                      <strong><h3>Total: ${cartProducts.reduce((a, b) => a + b!.totalProductPrice, 0)}</h3></strong>
+                    </div>
+
+                    <div>
+                      <button className="btn btn-success" onClick={() => navigate('/checkout')}>Checkout</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+
+      </>
       )}
-      {/* // if cart is empty then show this message to user "No products in the cart"
-      // else if page is loading then show this message to user "Loading..."
+      {/* if cart is empty then show this message to user "No products in the cart"
       // else show the cart products */}
       {cartProducts.length === 0 && (
         <div className="container-fluid">
@@ -111,20 +95,13 @@ const Cart = () => {
           <div className="products-box">
             <h1 className="text-center">No products in the cart</h1>
           </div>
+          <div className="text-center">
+            <Link to="/" className="btn btn-outline-dark"> Continue Shopping </Link>
+          </div>
         </div>
       )}
     </>
   );
 };
-
-
-//       {cartProducts.length < 1 && (
-//         <div className="container-fluid">
-//           <h3 className="text-center">Loading...</h3>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
 
 export default Cart;

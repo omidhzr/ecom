@@ -3,9 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import AddProducts from './AddProducts';
 import EditProducts from './EditProducts';
-// used github copilot for this page
-// delete products from firebase storage and firestore database when delete button is clicked
-// using firebase 9.0.0
+
 
 const Admin = ({}) => {
   // set state of products with type
@@ -43,7 +41,7 @@ const Admin = ({}) => {
           {successMsg && <div className="success-msg">{successMsg}</div>}
           {error ? <p>{error}</p> : null}
 
-          {/* //button to toggle Add products when clicked */}
+          {/* button to toggle Add products when clicked */}
 
           {addProductsButtonClicked
             ? (

@@ -72,7 +72,6 @@ const EditProducts = () => {
   };
 
   // edit product data information in firebase firestore and firebase storage database when edit button is clicked and product data is changed
-  // using firebase 9.0.0
   const editProduct = async (id: any, title: any, description: any, price: any, url: any) => {
     // setLoading(true);
     setError('');

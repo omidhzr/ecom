@@ -14,9 +14,9 @@ import Admin from "./components/Admin";
 import { Navbar } from "./components/Navbar";
 
 
-export interface IApplicationProps {}
+export interface ApplicationProps {}
 
-const App: React.FunctionComponent<IApplicationProps> = (props) => {
+const App: React.FunctionComponent<ApplicationProps> = (props) => {
 
   const [theme, setTheme] = useState<string>('light');
   localStorage.setItem('theme', 'light');

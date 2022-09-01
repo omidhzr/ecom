@@ -3,13 +3,12 @@ import { Icon } from 'react-icons-kit';
 import { plus } from 'react-icons-kit/feather/plus';
 import { minus } from 'react-icons-kit/feather/minus';
 import { auth, db } from '../config/config';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
 
-export const CartProduct = ({ cartProduct, cartProductIncrease, cartProductDecrease }: {
+export const CartProduct = ({ cartProduct }: {
   cartProduct: any;
-  cartProductIncrease: any;
-  cartProductDecrease: any;
 }) => {
   const handleCartIncrease = () => {
     cartProductIncrease(cartProduct);
@@ -23,41 +22,105 @@ export const CartProduct = ({ cartProduct, cartProductIncrease, cartProductDecre
     onAuthStateChanged(auth, (user) => {
       if (user) {
         deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
-        // .then(() => {
-        //   console.log("successfully deleted");
-        // });
+      }
+    });
+  };
+  
+  let Product: any;
+
+    // cart product increase function
+  const cartProductIncrease = (cartProduct: any) => {
+    // console.log(cartProduct);
+    Product = cartProduct;
+    Product.qty = Product.qty + 1;
+    Product.totalProductPrice = Product.qty * Product.price;
+    // updating in database
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
+      } else {
+        console.log('user is not logged in to increment');
       }
     });
   };
 
-  return (
+  // cart product decrease functionality
+  const cartProductDecrease = (cartProduct: any) => {
+    Product = cartProduct;
+    // check if qty is less than 1 if yes then delete the product
+    if (Product.qty <= 1) {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          await deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
 
-    <div className="product">
-      <div className="product-img">
-        <img src={cartProduct.url} alt="product-img" />
-      </div>
-      <div className="product-text title">{cartProduct.title}</div>
-      <div className="product-text description">{cartProduct.description}</div>
-      <div className="product-text price">$ {cartProduct.price}</div>
-      {/* <span>Quantity</span> */}
-      <div className="product-text quantity-box">
-        <div className="action-btns minus" onClick={handleCartDecrease}>
-          <Icon icon={minus} size={20} />
+        } else {
+          console.log('user is not logged in to delete');
+        }
+      });
+    } else {
+      Product.qty = Product.qty - 1;
+      Product.totalProductPrice = Product.qty * Product.price;
+      // updating in database
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
+
+        } else {
+          console.log('user is not logged in to decrement');
+        }
+      });
+    }
+  };
+  return (
+    <tr>
+      <td>
+        <div className="product-img">
+        <img src={cartProduct.url} alt={cartProduct.title} />
         </div>
-        <div className="quantity">{cartProduct.qty}</div>
-        <div className="action-btns plus" onClick={handleCartIncrease}>
-          <Icon icon={plus} size={20} />
+      </td>
+      <td>{cartProduct.title}</td>
+      <td>${cartProduct.price}</td>
+      <td>
+        <div className="qty-box">
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={handleCartDecrease}
+              >
+                <Icon icon={minus} size={24} />
+              </button>
+            </div>
+            <input
+              type="text"
+              className="form-control text-center disabled"
+              value={cartProduct.qty}
+              readOnly
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={handleCartIncrease}
+              >
+                <Icon icon={plus} size={24} />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      {/* <div className="product-text cart-price">
-        $ {cartProduct.totalProductPrice}
-      </div> */}
-      <div
-        className="btn btn-danger btn-md cart-btn"
-        onClick={handleCartDelete}
-      >
-        DELETE
-      </div>
-    </div>
+      </td>
+      <td>${cartProduct.totalProductPrice}</td>
+      <td>
+        <button
+          className="btn btn-outline-danger"
+          type="button"
+          onClick={handleCartDelete}
+        >
+          <Icon icon={iosTrashOutline} size={24} />
+        </button>
+      </td>
+    </tr>
   );
-};
+}
+

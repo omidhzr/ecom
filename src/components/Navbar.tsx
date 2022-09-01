@@ -28,6 +28,27 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
   const navigate = useNavigate();
   const themeSwitch = localStorage.getItem('theme');
 
+  const [theme, setTheme] = useState<string>('light');
+  localStorage.setItem('theme', 'light');
+  
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      setTheme('light');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
+  useEffect(() => {
+    // make the body class dark or light
+    document.body.classList.remove(theme === 'light' ? 'dark' : 'light');
+    document.body.classList.add(theme);
+
+  }, [theme]);
+
+
 //get number of items (quantity) in users cart
   function GetNumberOfCartItems () {
     useEffect(() => {
@@ -58,7 +79,7 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
       {!user && (
         <div className="right-side">
           <span>
-            {/* // show the login icon and when clicked navigate to login page */}
+            {/*  show the login icon and when clicked navigate to login page */}
             <Icon icon={profileIcon} onClick={()=> navigate('/login')} size={24} />
           </span>
           <span>
@@ -67,7 +88,6 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
                 type="switch"
                 id="switch"
                 onChange={switchTheme}
-
               />
             </Form>
           </span>
@@ -81,7 +101,7 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
             <Icon onClick={handleShowProfile} icon={profileIcon} size={24}>
               {user.displayName}
             </Icon>
-            {/* // when the Icon is clicked, the Profile component is rendered in the Offcanvas component */}
+            {/* when the Icon is clicked, the Profile component is rendered in the Offcanvas component */}
             <Offcanvas id='offcanvas' show={showProfile} onHide={handleCloseProfile} placement={'end'}>
               <Offcanvas.Header closeButton>
               </Offcanvas.Header>
@@ -93,7 +113,6 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
           <span>
             <div>
               <Icon
-                
                 icon={shoppingCart}
                 size={24}
                 onClick={() => {
@@ -116,9 +135,9 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
                 onChange={switchTheme}
               />
             </Form>
-            {/* // add lightswitch-off.png image from images folder when themeSwitch is light or lightswitch-on.png if dark 
-            // and use it as a switch button on click switchTheme function is called */}
-            <img src={themeSwitch === 'light' ? 'images/lightswitch-on.png' : 'images/lightswitch-off.png'} alt="" onClick={switchTheme} />
+            {/*  add lightswitch-off.png image from images folder when themeSwitch is light or lightswitch-on.png if dark 
+             and use it as a switch button on click switchTheme function is called */}
+            {/* <img src={themeSwitch === 'light' ? 'images/lightswitch-on.png' : 'images/lightswitch-off.png'} alt="" onClick={switchTheme} /> */}
           
           </span>
           <span className="cart-menu-btn">

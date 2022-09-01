@@ -62,7 +62,7 @@ html,body{
   width: 100%;
 }
 
-/* //add some padding for the right-side span elements */
+/*  add some padding for the right-side span elements */
 .navbox .right-side span {
   padding: 0 4px;
 }
@@ -106,6 +106,27 @@ html,body{
   }
 }
 
+.cart-menu-btn {
+  position: relative;
+}
+
+.cart-menu-btn .cart-indicator {
+  width: 18px;
+  height: 18px;
+  background-color: #e00a02;
+  padding: 3px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  position: absolute;
+  top: -7px;
+  right: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .cart-btn:hover {
   opacity: 0.8;
 }
@@ -117,11 +138,11 @@ html,body{
 .cart-btn {
   transition: 0.3s ease-in-out;
 }
-/* //make cart-btn #D6D6D7 when body class is dark */
+/*  make cart-btn #D6D6D7 when body class is dark */
 .dark .cart-btn {
   background-color: #A6ABAF;
 }
-/* // make cart-btn on hover #D6D6D7 when body class is dark */
+/*  make cart-btn on hover #D6D6D7 when body class is dark */
 .dark .cart-btn:hover {
   background-color: #A6ABAF;
 }
@@ -198,27 +219,6 @@ html,body{
   text-align: left;
 }
 
-.cart-menu-btn {
-  position: relative;
-}
-
-.cart-menu-btn .cart-indicator {
-  width: 18px;
-  height: 18px;
-  background-color: #e00a02;
-  padding: 3px;
-  border-radius: 20px;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 500;
-  position: absolute;
-  top: -10px;
-  right: 54px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .product .quantity-box{
   width: 70%;  
   display: flex;
@@ -256,7 +256,7 @@ html,body{
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
-/* // .loding spinner animation */
+/*  .loding spinner animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -267,27 +267,71 @@ html,body{
 }
 
 .dark {
-  background-color:#0A0924;
+  background-color: rgb(117, 117, 117);
   color: #fff;
 }
-/* //make the container-fluid background-color #323639 when body class is dark  */
+/*  make the container-fluid background-color #323639 when body class is dark  */
 .dark .container-fluid {
-  background-color: #0A0924;
+  background-color: rgb(117, 117, 117);
 }
 
 .dark .product:hover {
-  background-color: #1f1d6c;
+  background-color: #686868;
 }
 
-/* //make the offcanvas modal dark when body class is dark and modal is open */
+/*  make the offcanvas modal dark when body class is dark and modal is open */
 .dark #offcanvas {
-  background-color: #0A0924;
+  background-color: rgb(117, 117, 117);
 } 
 
-/* // make the profile card body dark when body class is dark */
+/*  make the profile card body dark when body class is dark */
 .dark .profile-card {
-  background-color: #0A0924;
+  background-color: rgb(117, 117, 117);
 }
 
+/*  make the product image in the card table body small so it fits the row height  */
+.container-fluid .card .card-body .product-img {
+  width: 180px;
+  height: 200px;
+}
 
+.container-fluid .card .card-body .product-img img {
+  width: 100%;
+  height: 100%;
+}
+/*  align the table data to be in the middle of the row */
+td {
+  vertical-align: middle !important;
+}
+
+/*  make the quantity box small enough  */
+.qty-box {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  padding: 5px;
+}
+
+.qty-box .form-control {
+  font-weight: 700;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #b9b5b5;
+  border-radius: 8px;
+}
+/*  make the total and checkout button in the footer have space between them */
+.card-footer .row .col-md-12 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*  make the table inherit dark and light colors */
+.dark .container-fluid .row .col-md-12 .card {
+  background-color: rgb(117, 117, 117);
+}
 

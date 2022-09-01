@@ -1,28 +1,10 @@
-// Work In Progress
-// Does not work properly yet
-// import React from "react";
-// import { Navigate } from "react-router-dom";
-// import { UserAuth } from "../context/AuthContext";
-
-// export default function ProtectedRoute({children}:{children: any}) {
-//   const {user, loggedIn} = UserAuth();
-//   // console.log(loggedIn);
-
-//   if (loggedIn) {
-//     return <>{children}</>;
-//   } else {
-//     return <Navigate to="/login" />;
-
-//   }
-// }
-
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-export interface IAuthRouteProps {}
+export interface AuthRouteProps {}
 
-const ProtectedRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
+const ProtectedRoute: React.FunctionComponent<AuthRouteProps> = (props) => {
     //ignore line below
     const { children } = props;
     const auth = getAuth();
