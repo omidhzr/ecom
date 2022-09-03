@@ -69,11 +69,11 @@ const Cart = () => {
                 <div className="row">
                   <div className="col-md-12">
 
-                    <div>
+                    <div className="footer-total">
                       <strong><h3>Total: ${cartProducts.reduce((a, b) => a + b!.totalProductPrice, 0)}</h3></strong>
                     </div>
 
-                    <div>
+                    <div className="footer-checkout-btn">
                       <button className="btn btn-success" onClick={() => navigate('/checkout')}>Checkout</button>
                     </div>
 

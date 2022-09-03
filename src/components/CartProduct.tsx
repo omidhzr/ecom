@@ -6,6 +6,7 @@ import { auth, db } from '../config/config';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
+import {ecommerce_cart_remove} from 'react-icons-kit/linea/ecommerce_cart_remove'
 
 export const CartProduct = ({ cartProduct }: {
   cartProduct: any;
@@ -112,13 +113,15 @@ export const CartProduct = ({ cartProduct }: {
       </td>
       <td>${cartProduct.totalProductPrice}</td>
       <td>
+        <div className="delete-btn">
         <button
           className="btn btn-outline-danger"
           type="button"
           onClick={handleCartDelete}
         >
-          <Icon icon={iosTrashOutline} size={24} />
+        <Icon icon={ecommerce_cart_remove} size={24} />
         </button>
+        </div>
       </td>
     </tr>
   );

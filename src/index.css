@@ -120,8 +120,8 @@ html,body{
   font-size: 10px;
   font-weight: 500;
   position: absolute;
-  top: -7px;
-  right: 54px;
+  top: -6px;
+  right: 39px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,11 +140,13 @@ html,body{
 }
 /*  make cart-btn #D6D6D7 when body class is dark */
 .dark .cart-btn {
-  background-color: #A6ABAF;
+  /* background-color: #A6ABAF; */
+  opacity: 0.8;
 }
 /*  make cart-btn on hover #D6D6D7 when body class is dark */
 .dark .cart-btn:hover {
-  background-color: #A6ABAF;
+  /* background-color: #A6ABAF; */
+  opacity: 0.8;
 }
 
 .link {
@@ -235,18 +237,6 @@ html,body{
   cursor: pointer;
 }
 
-.product .quantity-box .action-btns.plus:hover{
-  color: #007700;
-}
-
-.product .quantity-box .action-btns.minus:hover{
-  color: #bc0701;
-}
-
-.product .quantity-box .quantity:hover{
-  display: block;
-}
-
 .loading {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
@@ -256,6 +246,7 @@ html,body{
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
+
 /*  .loding spinner animation */
 @keyframes spin {
   0% {
@@ -267,26 +258,26 @@ html,body{
 }
 
 .dark {
-  background-color: rgb(117, 117, 117);
+  background-color: #121212;
   color: #fff;
 }
 /*  make the container-fluid background-color #323639 when body class is dark  */
 .dark .container-fluid {
-  background-color: rgb(117, 117, 117);
+  background-color: #121212;
 }
 
 .dark .product:hover {
-  background-color: #686868;
+  background-color: #2e2e2e;
 }
 
 /*  make the offcanvas modal dark when body class is dark and modal is open */
 .dark #offcanvas {
-  background-color: rgb(117, 117, 117);
+  background-color: #121212;
 } 
 
 /*  make the profile card body dark when body class is dark */
 .dark .profile-card {
-  background-color: rgb(117, 117, 117);
+  background-color: #121212;
 }
 
 /*  make the product image in the card table body small so it fits the row height  */
@@ -326,12 +317,36 @@ td {
 /*  make the total and checkout button in the footer have space between them */
 .card-footer .row .col-md-12 {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-block: 20px;
+  padding: 20px 20px;
   align-items: center;
 }
 
-/*  make the table inherit dark and light colors */
-.dark .container-fluid .row .col-md-12 .card {
-  background-color: rgb(117, 117, 117);
+/* add space between total and checkout button in the footer */
+.card-footer .row .col-md-12 .btn {
+  margin-left: 80px;
 }
 
+/*  make the table inherit dark and light colors */
+.dark .table-striped tbody tr td {
+  color: #fff;
+}
+
+.dark .table {
+  color: #fff;
+}
+.dark .container-fluid .card {
+  background-color: #121212;
+  color: white;
+}
+
+/* make the delete icon in the table white when body class is dark */
+.dark .delete-btn button{
+  color: #fff;
+}
+
+/* make card of profile-update dark when body class is dark */
+.dark .card {
+  background-color: #121212;
+}

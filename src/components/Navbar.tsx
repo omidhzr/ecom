@@ -5,8 +5,10 @@ import logo from '../images/logo.svg';
 // import { UserAuth } from '../context/AuthContext'
 import { Icon } from 'react-icons-kit';
 // import {user as profileIcon} from 'react-icons-kit/typicons/user'
-import { user as profileIcon } from 'react-icons-kit/feather/user';
+// import { user as profileIcon } from 'react-icons-kit/feather/user';
+import {ic_person as profileIcon} from 'react-icons-kit/md/ic_person'
 import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
+import {ic_shopping_cart_outline} from 'react-icons-kit/md/ic_shopping_cart_outline'
 // import { ShoppingCart } from './ShoppingCart'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Profile from './Profile';
@@ -17,6 +19,7 @@ import { UserAuth } from '../context/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/config';
 import {onSnapshot,collection} from 'firebase/firestore';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
 
@@ -26,28 +29,10 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
   const [totalProducts, setTotalProducts] = useState<number>();
   const {user} = UserAuth();
   const navigate = useNavigate();
-  const themeSwitch = localStorage.getItem('theme');
 
-  const [theme, setTheme] = useState<string>('light');
-  localStorage.setItem('theme', 'light');
-  
-  const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      setTheme('light');
-      localStorage.setItem('theme', 'light');
-    }
-  };
-
-  useEffect(() => {
-    // make the body class dark or light
-    document.body.classList.remove(theme === 'light' ? 'dark' : 'light');
-    document.body.classList.add(theme);
-
-  }, [theme]);
-
+  const [isDarkMode, setDarkMode] =  useState<boolean>(
+    localStorage.getItem('dark-mode') === 'true'
+  );
 
 //get number of items (quantity) in users cart
   function GetNumberOfCartItems () {
@@ -68,6 +53,23 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
   GetNumberOfCartItems();
   // console.log('totalProducts: ' + totalProducts);
 
+  const [dark, setDark] = useState<boolean>(
+    localStorage.getItem('dark-mode') === 'true'
+  );
+  useEffect(() => {
+    localStorage.setItem('dark-mode', dark);
+    // if dark-mode is true, add dark class to body
+    if (dark) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [dark]);
+
+  const toggleTheme = (checked: boolean) => {
+    setDark(!dark);
+    setDarkMode(checked);
+  };
 
   return (
     <div className="navbox">
@@ -83,13 +85,19 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
             <Icon icon={profileIcon} onClick={()=> navigate('/login')} size={24} />
           </span>
           <span>
-            <Form>
+            {/* <Form>
               <Form.Check 
                 type="switch"
                 id="switch"
                 onChange={switchTheme}
               />
-            </Form>
+            </Form> */}
+            <DarkModeSwitch
+              style={{ marginBottom: '2rem' }}
+              checked={isDarkMode}
+              onChange={toggleTheme}
+              size={24}
+            />
           </span>
           <span>{}</span>
 
@@ -113,7 +121,7 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
           <span>
             <div>
               <Icon
-                icon={shoppingCart}
+                icon={ic_shopping_cart_outline}
                 size={24}
                 onClick={() => {
                   window.location.href = '/cart';
@@ -128,13 +136,19 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
             ></Icon> */}
           </span>
           <span>
-            <Form>
+            {/* <Form>
               <Form.Check 
                 type="switch"
                 id="switch"
                 onChange={switchTheme}
               />
-            </Form>
+            </Form> */}
+            <DarkModeSwitch
+              style={{ marginBottom: '2rem' }}
+              checked={isDarkMode}
+              onChange={toggleTheme}
+              size={24}
+            />
             {/*  add lightswitch-off.png image from images folder when themeSwitch is light or lightswitch-on.png if dark 
              and use it as a switch button on click switchTheme function is called */}
             {/* <img src={themeSwitch === 'light' ? 'images/lightswitch-on.png' : 'images/lightswitch-off.png'} alt="" onClick={switchTheme} /> */}

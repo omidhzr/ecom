@@ -18,31 +18,27 @@ export interface ApplicationProps {}
 
 const App: React.FunctionComponent<ApplicationProps> = (props) => {
 
-  const [theme, setTheme] = useState<string>('light');
-  localStorage.setItem('theme', 'light');
-  
-  const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      setTheme('light');
-      localStorage.setItem('theme', 'light');
-    }
-  };
-
+  const [dark, setDark] = useState<boolean>(
+    localStorage.getItem('dark-mode') === 'true'
+  );
   useEffect(() => {
-    // make the body class dark or light
-    document.body.classList.remove(theme === 'light' ? 'dark' : 'light');
-    document.body.classList.add(theme);
+    localStorage.setItem('dark-mode', dark);
+    // if dark-mode is true, add dark class to body
+    if (dark) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [dark]);
 
-  }, [theme]);
-
+  const toggleTheme = () => {
+    setDark(!dark);
+  };
   
   return (
     
     <AuthContextProvider>
-      <Navbar switchTheme={toggleTheme} />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
