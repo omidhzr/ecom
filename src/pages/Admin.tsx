@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'react-bootstrap';
-import AddProducts from './AddProducts';
-import EditProducts from './EditProducts';
+import AddProducts from '../components/AddProducts';
+import EditProducts from '../components/EditProducts';
 
 
 const Admin = ({}) => {

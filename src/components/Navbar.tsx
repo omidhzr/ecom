@@ -21,7 +21,7 @@ import { auth, db } from '../config/config';
 import {onSnapshot,collection} from 'firebase/firestore';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
-export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
+export const Navbar = () => {
 
   const [showProfile, setShowProfile] = useState(false);
   const handleShowProfile = () => setShowProfile(true);
@@ -85,13 +85,6 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
             <Icon icon={profileIcon} onClick={()=> navigate('/login')} size={24} />
           </span>
           <span>
-            {/* <Form>
-              <Form.Check 
-                type="switch"
-                id="switch"
-                onChange={switchTheme}
-              />
-            </Form> */}
             <DarkModeSwitch
               style={{ marginBottom: '2rem' }}
               checked={isDarkMode}
@@ -128,39 +121,16 @@ export const Navbar = ({ switchTheme }: { switchTheme: any }) => {
                 }}
               />
             </div>
-            {/* <Icon
-              icon={shoppingCart}
-              className="navlinks"
-              size={24}
-              onClick={handleShow}
-            ></Icon> */}
           </span>
           <span>
-            {/* <Form>
-              <Form.Check 
-                type="switch"
-                id="switch"
-                onChange={switchTheme}
-              />
-            </Form> */}
             <DarkModeSwitch
               style={{ marginBottom: '2rem' }}
               checked={isDarkMode}
               onChange={toggleTheme}
               size={24}
             />
-            {/*  add lightswitch-off.png image from images folder when themeSwitch is light or lightswitch-on.png if dark 
-             and use it as a switch button on click switchTheme function is called */}
-            {/* <img src={themeSwitch === 'light' ? 'images/lightswitch-on.png' : 'images/lightswitch-off.png'} alt="" onClick={switchTheme} /> */}
-          
           </span>
           <span className="cart-menu-btn">
-            {/*   this will be the cart in the future /Omid
-            <ShoppingCart
-              shoow={shoow}
-              handleClose={handleClose}
-            ></ShoppingCart> */}
-
             {totalProducts >0 && <span className="cart-menu-btn  cart-indicator">
               {totalProducts}
             </span>

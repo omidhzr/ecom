@@ -3,7 +3,7 @@ import { auth, db } from '../config/config';
 import { onSnapshot, collection } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { CartProduct } from './CartProduct';
+import { CartProduct } from '../components/CartProduct';
 
 const Cart = () => {
   // state of cart products

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MemoProducts } from './Products';
+import { MemoProducts } from '../components/Products';
 import { auth, db } from '../config/config';
 import {
   getDocs,

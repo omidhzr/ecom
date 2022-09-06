@@ -350,3 +350,35 @@ td {
 .dark .card {
   background-color: #121212;
 }
+
+/* contact form */
+/* // center the form */
+.contact-form input,
+.contact-form textarea {
+  border: 0;
+  margin-bottom: 10px;
+  padding: 20px;
+  font-size: 17px;
+  /* background-color: transparent; */
+  color: black;
+  font-weight: 200;
+  border: 1px solid rgb(12, 12, 12);
+
+}
+
+.contactform input::placeholder,
+.contactform textarea::placeholder {
+  color: black;
+  opacity: 0.9;
+  size: large;
+}
+/*contact form end*/
+
+/* the 404 page not found */
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 60vh;
+}

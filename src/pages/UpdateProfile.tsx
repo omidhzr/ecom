@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { MutableRefObject, useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { UserAuth, AuthContextProvider } from '../context/AuthContext';
@@ -49,9 +48,8 @@ const UpdateProfile = () => {
   }
 
   return (
-    <AuthContextProvider>
       <>
-        <Card>
+        {user && <Card>
           <Card.Body>
             <h2 className="text-center mb-4">Update Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -62,9 +60,7 @@ const UpdateProfile = () => {
                   type="text"
                   ref={nameRef}
                   required
-                  // ignore the error
-                  // @ts-ignore
-                  defaultValue={user!.displayName!}
+                  defaultValue={user!.displayName}
                 />
               </Form.Group>
               <Form.Group id="email">
@@ -73,9 +69,7 @@ const UpdateProfile = () => {
                   type="email"
                   ref={emailRef}
                   required
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  defaultValue={user!.email!}
+                  defaultValue={user!.email}
                 />
               </Form.Group>
               <Form.Group id="password">
@@ -105,11 +99,11 @@ const UpdateProfile = () => {
             </Form>
           </Card.Body>
         </Card>
+        }
         <div className="w-100 text-center mt-2">
           <Link to="/">Cancel</Link>
         </div>
       </>
-    </AuthContextProvider>
   );
 };
 
