@@ -17,12 +17,12 @@ import PageNotFound from "./pages/PageNotFound";
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ApplicationProps {}
+export interface ApplicationProps { }
 
 const App: React.FunctionComponent<ApplicationProps> = () => {
-  
+
   return (
-    
+
     <AuthContextProvider>
       <Navbar />
       <Routes>
@@ -31,17 +31,17 @@ const App: React.FunctionComponent<ApplicationProps> = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} /> */}
-        <Route path="/update-profile" element={<ProtectedRoute><UpdateProfile /></ProtectedRoute>}/> 
+        <Route path="/update-profile" element={<ProtectedRoute><UpdateProfile /></ProtectedRoute>} />
         {/* <Route path="/add-products" element={<ProtectedRoute><AddProducts /></ProtectedRoute>} /> */}
-        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}/>
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<PageNotFound/>} />
+        <Route path="*" element={<PageNotFound />} />
 
       </Routes>
     </AuthContextProvider>
-    
+
   );
 }
 

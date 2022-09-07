@@ -96,7 +96,7 @@ const EditProducts = () => {
       }, 2000);
       // setLoading(false);
       getProducts();
-    } catch (error : any) {
+    } catch (error: any) {
       setError(error.message);
       setLoading(false);
     }
@@ -109,17 +109,17 @@ const EditProducts = () => {
 
   return (
     <div><h3>Edit</h3>
-      <br/>
+      <br />
       {successMsg && <div className="success-msg">{successMsg}</div>}
       {loading ? (
         <>
           <div>Loading...</div>
-          <br/>
+          <br />
           <div className="loading"></div>
         </>
       ) : null}
       {error ? <p>{error}</p> : null}
-      <br/>
+      <br />
 
       <table className="table table-striped">
         <thead>
@@ -208,7 +208,7 @@ const EditProducts = () => {
                       }
                     }}
                   >
-                Delete
+                    Delete
                   </Button>
                 </td>
                 <td>
@@ -218,14 +218,14 @@ const EditProducts = () => {
                       onClick={() => {
                         editProduct(
                           product.id,
-                      titleRef.current?.value,
-                      descRef.current?.value,
-                      priceRef.current?.value,
-                      imageRef.current?.value
+                          titleRef.current?.value,
+                          descRef.current?.value,
+                          priceRef.current?.value,
+                          imageRef.current?.value
                         );
                       }}
                     >
-                  Edit
+                      Edit
                     </Button>
                   ) : (
                     <Button
@@ -234,7 +234,7 @@ const EditProducts = () => {
                         handleEdit(product.id);
                       }}
                     >
-                  Edit
+                      Edit
                     </Button>
                   )}
                 </td>

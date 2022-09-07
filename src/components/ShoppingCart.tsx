@@ -21,7 +21,7 @@ export const ShoppingCart = ({ shoow, handleClose }: {
       </Offcanvas.Header>
       <Offcanvas.Body>
         {/* <Stack ></Stack> */}
-        <p>Your chosen products: {}</p>
+        <p>Your chosen products: { }</p>
       </Offcanvas.Body>
     </Offcanvas>
   );

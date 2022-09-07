@@ -6,9 +6,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = ReactDOM.createRoot(document.getElementById("root")!); 
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );

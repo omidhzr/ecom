@@ -22,14 +22,14 @@ import {
 export type AuthContextType = {
   loggedIn: boolean;
   user: User | null;
-  createUser: (name: string, email: string, password: string) => Promise < void > ;
-  signIn: (email: string, password: string) => Promise<void> ;
-  logOut: () => Promise < void > ;
-  updateEmajl: (email: string) => Promise < void > ;
-  updatePass: (password:string) => Promise < void > ;
-  forgotPassword: (email: string) => Promise < void > ;
-  updateUser: (user: string) => Promise < void > ;
-  removeUser: (user: any) => Promise < void > ;
+  createUser: (name: string, email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  logOut: () => Promise<void>;
+  updateEmajl: (email: string) => Promise<void>;
+  updatePass: (password: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  updateUser: (user: string) => Promise<void>;
+  removeUser: (user: any) => Promise<void>;
   // sendEmailVerification: () => Promise < void > ;
 };
 
@@ -49,11 +49,11 @@ const UserContext = createContext({
 
 interface AuthProviderProps {
   children: React.ReactNode
-}  
+}
 
-export const AuthContextProvider = ({children}: AuthProviderProps) => {
+export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loggedIn, setUserLoggedIn] = useState < boolean > (false);
+  const [loggedIn, setUserLoggedIn] = useState<boolean>(false);
 
   useEffect(
     () =>
@@ -87,12 +87,12 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
 
   };
 
-  const signIn = async (email: string, password:string) => {
+  const signIn = async (email: string, password: string) => {
     try {
       return (await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         // setUser(user);
-       
+
         setUserLoggedIn(true);
       }
       ));
@@ -100,13 +100,13 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
       throw new Error(error.message);
     }
   };
-    
+
 
   const logOut = async () => {
-    return await signOut(auth).then(() => {setUserLoggedIn(false);});
+    return await signOut(auth).then(() => { setUserLoggedIn(false); });
   };
 
-  const forgotPassword = async (email:string) => {
+  const forgotPassword = async (email: string) => {
     return await sendPasswordResetEmail(auth, email);
   };
 
@@ -116,20 +116,21 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
     }
   };
 
-  const updatePass = async (password:string) => {
+  const updatePass = async (password: string) => {
     if (user) {
-    return await updatePassword(user, password);
-    } 
+      return await updatePassword(user, password);
+    }
   };
 
-  const removeUser = async (user : any) => {
+  const removeUser = async (user: any) => {
     return await deleteUser(user);
   };
 
   // console.log(user);
-  
+
   const memoedValue = useMemo(
-    () => ({ loggedIn,
+    () => ({
+      loggedIn,
       createUser,
       user,
       updateUser,
@@ -138,12 +139,13 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
       logOut,
       signIn,
       forgotPassword,
-      removeUser }),
-    [user,signIn, logOut, loggedIn]
+      removeUser
+    }),
+    [user, signIn, logOut, loggedIn]
   );
 
   return (
-  // return the context provider with the values we want to use in the app
+    // return the context provider with the values we want to use in the app
     <UserContext.Provider value={memoedValue}>
       {children}
     </UserContext.Provider>

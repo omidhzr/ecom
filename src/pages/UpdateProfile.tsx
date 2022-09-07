@@ -15,7 +15,7 @@ const UpdateProfile = () => {
 
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function handleSubmit (e: any) {
+  function handleSubmit(e: any) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError('Passwords do not match');
@@ -51,62 +51,62 @@ const UpdateProfile = () => {
   }
 
   return (
-      <>
-        {user && <Card>
-          <Card.Body>
-            <h2 className="text-center mb-4">Update Profile</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  ref={nameRef}
-                  required
-                  defaultValue={user?.displayName || ''}
-                />
-              </Form.Group>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  ref={emailRef}
-                  required
-                  defaultValue={user?.email || ''}
-                />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordRef}
-                  placeholder="Leave blank to keep the same"
-                />
-              </Form.Group>
-              <Form.Group id="password-confirm">
-                <Form.Label>Password Confirmation</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordConfirmRef}
-                  placeholder="Leave blank to keep the same"
-                />
-              </Form.Group>
-              <br />
-              <Button
-                disabled={loading}
-                className="btn btn-praimary w-100 mt-2"
-                type="submit"
-              >
-                UPDATE
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        }
-        <div className="w-100 text-center mt-2">
-          <Link to="/">Cancel</Link>
-        </div>
-      </>
+    <>
+      {user && <Card>
+        <Card.Body>
+          <h2 className="text-center mb-4">Update Profile</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group id="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                ref={nameRef}
+                required
+                defaultValue={user?.displayName || ''}
+              />
+            </Form.Group>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                ref={emailRef}
+                required
+                defaultValue={user?.email || ''}
+              />
+            </Form.Group>
+            <Form.Group id="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                ref={passwordRef}
+                placeholder="Leave blank to keep the same"
+              />
+            </Form.Group>
+            <Form.Group id="password-confirm">
+              <Form.Label>Password Confirmation</Form.Label>
+              <Form.Control
+                type="password"
+                ref={passwordConfirmRef}
+                placeholder="Leave blank to keep the same"
+              />
+            </Form.Group>
+            <br />
+            <Button
+              disabled={loading}
+              className="btn btn-praimary w-100 mt-2"
+              type="submit"
+            >
+              UPDATE
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+      }
+      <div className="w-100 text-center mt-2">
+        <Link to="/">Cancel</Link>
+      </div>
+    </>
   );
 };
 

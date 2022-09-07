@@ -8,7 +8,7 @@ const Profile = () => {
   const { user, logOut, removeUser } = UserAuth();
   const navigate = useNavigate();
 
-  async function handleLogout () {
+  async function handleLogout() {
     setError('');
 
     try {
@@ -18,7 +18,7 @@ const Profile = () => {
       setError('Failed to log out');
     }
   }
-  async function deleteAccount () {
+  async function deleteAccount() {
     setError('');
 
     try {
@@ -37,13 +37,13 @@ const Profile = () => {
           {error && <Alert variant="danger">{error}</Alert>}
 
           <strong>Name:</strong> {
-          user?.displayName || 'Name'}
+            user?.displayName || 'Name'}
           <br />
 
           <strong>Email:</strong> {
-          user?.email || 'email@domain.com'}
+            user?.email || 'email@domain.com'}
           <Button
-            onClick={()=> navigate("/update-profile")}
+            onClick={() => navigate("/update-profile")}
             className="btn btn-dark w-100 mt-2"
           >
             Update Profile

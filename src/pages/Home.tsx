@@ -17,7 +17,7 @@ export const Home = () => {
   const [products, setProducts] = useState<never[]>([]);
 
   // getting current user uid
-  function GetUserUid () {
+  function GetUserUid() {
     const [uid, setUid] = useState<string>('');
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
@@ -87,7 +87,7 @@ export const Home = () => {
       navigate('/login');
     }
   };
-  
+
 
   useEffect(() => {
     getProducts();
@@ -106,7 +106,7 @@ export const Home = () => {
       )}
       {products.length < 1 && (
         <div className="container-fluid">
-          <br/>
+          <br />
           <div className='loading'></div></div>
       )}
     </>

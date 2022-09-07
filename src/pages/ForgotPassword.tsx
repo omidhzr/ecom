@@ -31,20 +31,20 @@ const ForgotPassword = () => {
       <h2>Forgot your password ... :( </h2>
       <br />
       {message && <span className='success-msg'>{message}</span>}
-      <br/>
-      <br/>
+      <br />
+      <br />
       <form autoComplete="off" className='form-group' onSubmit={resetPassword}>
         <label htmlFor="email">Email</label>
         <input type="email" className='form-control' required
           onChange={(e) => setEmail(e.target.value)} value={email} />
-        <br/>
+        <br />
         <button type="submit" className='btn btn-success btn-md mybtn'>Submit!</button>
       </form>
-      <br/>
+      <br />
       {error && <span className='error-msg'>{error}</span>}
-      <br/>
+      <br />
       <span>Login <Link to="../Login">Here!</Link> </span>
-      <br/>
+      <br />
       <span>Don't have an account yet? Register <Link to="../Signup">Here!</Link>
       </span>
     </div>

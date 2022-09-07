@@ -15,7 +15,7 @@ export const Login = () => {
     setError('');
     try {
       await signIn(email, password);
-        navigate('/');
+      navigate('/');
       // navigate('../');
     } catch (error: any) {
       setError(error.message);

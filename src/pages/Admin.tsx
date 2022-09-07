@@ -6,12 +6,9 @@ import EditProducts from '../components/EditProducts';
 
 
 const Admin = () => {
-  // set state of products with type
 
-  // const [successMsg] = useState < string > ('');
-  // const [error] = useState < string > ('');
-  const [addProductsButtonClicked, setAddProducts] = useState < boolean > (false);
-  const [editProductsButtonClicked, setEditProducts] = useState < boolean > (false);
+  const [addProductsButtonClicked, setAddProducts] = useState<boolean>(false);
+  const [editProductsButtonClicked, setEditProducts] = useState<boolean>(false);
 
   return (
     <div className="container-fluid">
@@ -24,35 +21,30 @@ const Admin = () => {
           variant="warning"
           onClick={() => setEditProducts(!editProductsButtonClicked)}
         >
-            Edit Products
+          Edit Products
         </Button>
         <br></br>
         <Button
           variant="primary"
           onClick={() => setAddProducts(!addProductsButtonClicked)}
         >
-            Add Products
+          Add Products
         </Button>
         <br />
 
 
         <div className="col-md-12">
 
-          {/* {successMsg && <div className="success-msg">{successMsg}</div>}
-          {error ? <p>{error}</p> : null} */}
-
-          {/* button to toggle Add products when clicked */}
-
           {addProductsButtonClicked
             ? (
-              <AddProducts/>
+              <AddProducts />
             )
             : null}
 
           <br></br>
 
           {editProductsButtonClicked && (
-            <EditProducts/>
+            <EditProducts />
           )}
         </div>
 

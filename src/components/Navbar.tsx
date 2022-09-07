@@ -5,9 +5,9 @@ import logo from '../images/logo.svg';
 import { Icon } from 'react-icons-kit';
 // import {user as profileIcon} from 'react-icons-kit/typicons/user'
 // import { user as profileIcon } from 'react-icons-kit/feather/user';
-import {ic_person as profileIcon} from 'react-icons-kit/md/ic_person'
+import { ic_person as profileIcon } from 'react-icons-kit/md/ic_person'
 // import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
-import {ic_shopping_cart_outline} from 'react-icons-kit/md/ic_shopping_cart_outline'
+import { ic_shopping_cart_outline } from 'react-icons-kit/md/ic_shopping_cart_outline'
 // import { ShoppingCart } from './ShoppingCart'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Profile from './Profile';
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/config';
-import {onSnapshot,collection} from 'firebase/firestore';
+import { onSnapshot, collection } from 'firebase/firestore';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 export const Navbar = () => {
@@ -26,15 +26,15 @@ export const Navbar = () => {
   const handleShowProfile = () => setShowProfile(true);
   const handleCloseProfile = () => setShowProfile(false);
   const [totalProducts, setTotalProducts] = useState<number>();
-  const {user} = UserAuth();
+  const { user } = UserAuth();
   const navigate = useNavigate();
 
-  const [isDarkMode, setDarkMode] =  useState<boolean>(
+  const [isDarkMode, setDarkMode] = useState<boolean>(
     localStorage.getItem('dark-mode') === 'true'
   );
 
-//get number of items (quantity) in users cart
-  function GetNumberOfCartItems () {
+  //get number of items (quantity) in users cart
+  function GetNumberOfCartItems() {
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -75,14 +75,14 @@ export const Navbar = () => {
     <div className="navbox">
       <div className="left-side">
         <Link to="/">
-        <img src={logo} alt="" />
+          <img src={logo} alt="" />
         </Link>
       </div>
       {!user && (
         <div className="right-side">
           <span>
             {/*  show the login icon and when clicked navigate to login page */}
-            <Icon icon={profileIcon} onClick={()=> navigate('/login')} size={24} />
+            <Icon icon={profileIcon} onClick={() => navigate('/login')} size={24} />
           </span>
           <span>
             <DarkModeSwitch

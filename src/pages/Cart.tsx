@@ -16,7 +16,7 @@ const Cart = () => {
       if (user) {
         onSnapshot(collection(db, 'Cart ' + user.uid), (snapshot) => {
           // eslint-disable-next-line no-empty-pattern
-          const newCartProducts: any  = snapshot.docs.map((doc) => ({
+          const newCartProducts: any = snapshot.docs.map((doc) => ({
             ID: doc.id,
             ...doc.data()
           }));
@@ -37,58 +37,56 @@ const Cart = () => {
     <>
       <br></br>
       {cartProducts.length > 0 && (
-      <>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card">
-              <div className="card-header">
-                <h4>Cart</h4>
-              </div>
-              <div className="card-body">
-                <div className="table-responsive">
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Product Image</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cartProducts.map((product: any) => (
-                        <CartProduct key={product.ID} cartProduct={product} />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="card-footer">
-                <div className="row">
-                  <div className="col-md-12">
-
-                    <div className="footer-total">
-                      {/* // refactor this so typescript doesn't complain */}
-                      <strong><h3>Total: {cartProducts.reduce((acc: any, item: any) => acc + item.totalProductPrice, 0)}</h3></strong>
-                      {/* <strong><h3>Total: ${cartProducts.reduce((a, b) => a + b.totalProductPrice, 0)}</h3></strong> */}
+        <>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h4>Cart</h4>
+                  </div>
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Product Image</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cartProducts.map((product: any) => (
+                            <CartProduct key={product.ID} cartProduct={product} />
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
+                  <div className="card-footer">
+                    <div className="row">
+                      <div className="col-md-12">
 
-                    <div className="footer-checkout-btn">
-                      <button className="btn btn-success" onClick={() => navigate('/checkout')}>Checkout</button>
+                        <div className="footer-total">
+                          <strong><h3>Total: {cartProducts.reduce((acc: any, item: any) => acc + item.totalProductPrice, 0)}</h3></strong>
+                        </div>
+
+                        <div className="footer-checkout-btn">
+                          <button className="btn btn-success" onClick={() => navigate('/checkout')}>Checkout</button>
+                        </div>
+
+                      </div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      </>
+        </>
       )}
       {/* if cart is empty then show this message to user "No products in the cart"
       // else show the cart products */}

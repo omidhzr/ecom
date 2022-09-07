@@ -6,7 +6,7 @@ import { auth, db } from '../config/config';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
-import {ecommerce_cart_remove} from 'react-icons-kit/linea/ecommerce_cart_remove'
+import { ecommerce_cart_remove } from 'react-icons-kit/linea/ecommerce_cart_remove'
 
 export const CartProduct = ({ cartProduct }: {
   cartProduct: any;
@@ -26,10 +26,10 @@ export const CartProduct = ({ cartProduct }: {
       }
     });
   };
-  
+
   let Product: any;
 
-    // cart product increase function
+  // cart product increase function
   const cartProductIncrease = (cartProduct: any) => {
     // console.log(cartProduct);
     Product = cartProduct;
@@ -76,7 +76,7 @@ export const CartProduct = ({ cartProduct }: {
     <tr>
       <td>
         <div className="product-img">
-        <img src={cartProduct.url} alt={cartProduct.title} />
+          <img src={cartProduct.url} alt={cartProduct.title} />
         </div>
       </td>
       <td>{cartProduct.title}</td>
@@ -114,13 +114,13 @@ export const CartProduct = ({ cartProduct }: {
       <td>${cartProduct.totalProductPrice}</td>
       <td>
         <div className="delete-btn">
-        <button
-          className="btn btn-outline-danger"
-          type="button"
-          onClick={handleCartDelete}
-        >
-        <Icon icon={ecommerce_cart_remove} size={24} />
-        </button>
+          <button
+            className="btn btn-outline-danger"
+            type="button"
+            onClick={handleCartDelete}
+          >
+            <Icon icon={ecommerce_cart_remove} size={24} />
+          </button>
         </div>
       </td>
     </tr>

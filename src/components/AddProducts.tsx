@@ -92,9 +92,9 @@ const AddProducts = () => {
       <h3>Add Products</h3>
       <hr></hr>
       {successMsg && <div className="success-msg">{successMsg}</div>}
-      <br/>
+      <br />
       {error ? <p>{error}</p> : null}
-      <br/>
+      <br />
       <form
         autoComplete="off"
         className="form-group"
