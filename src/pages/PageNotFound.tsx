@@ -1,5 +1,7 @@
 import React from 'react'
 
+// refactor this line so that typescript does not complain about return type
+
 const PageNotFound = () => {
   return (
     <div className="page-not-found" ><h1>404 Page Not Found!</h1>

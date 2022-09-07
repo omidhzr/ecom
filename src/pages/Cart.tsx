@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/config';
 import { onSnapshot, collection } from 'firebase/firestore';
@@ -70,7 +71,9 @@ const Cart = () => {
                   <div className="col-md-12">
 
                     <div className="footer-total">
-                      <strong><h3>Total: ${cartProducts.reduce((a, b) => a + b!.totalProductPrice, 0)}</h3></strong>
+                      {/* // refactor this so typescript doesn't complain */}
+                      <strong><h3>Total: {cartProducts.reduce((acc: any, item: any) => acc + item.totalProductPrice, 0)}</h3></strong>
+                      {/* <strong><h3>Total: ${cartProducts.reduce((a, b) => a + b.totalProductPrice, 0)}</h3></strong> */}
                     </div>
 
                     <div className="footer-checkout-btn">

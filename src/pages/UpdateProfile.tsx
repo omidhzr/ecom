@@ -1,6 +1,6 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
-import { UserAuth, AuthContextProvider } from '../context/AuthContext';
+import { UserAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const UpdateProfile = () => {
@@ -14,6 +14,7 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
 
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function handleSubmit (e: any) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -23,12 +24,14 @@ const UpdateProfile = () => {
     const promises = [];
     setLoading(true);
     setError('');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (nameRef.current.value !== user!.displayName) {
+    if (nameRef.current.value !== user.displayName) {
       promises.push(updateUser(nameRef.current.value));
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (emailRef.current.value !== user!.email) {
+    if (emailRef.current.value !== user.email) {
       promises.push(updateEmajl(emailRef.current.value));
     }
     if (passwordRef.current.value) {
@@ -60,7 +63,7 @@ const UpdateProfile = () => {
                   type="text"
                   ref={nameRef}
                   required
-                  defaultValue={user!.displayName}
+                  defaultValue={user?.displayName || ''}
                 />
               </Form.Group>
               <Form.Group id="email">
@@ -69,7 +72,7 @@ const UpdateProfile = () => {
                   type="email"
                   ref={emailRef}
                   required
-                  defaultValue={user!.email}
+                  defaultValue={user?.email || ''}
                 />
               </Form.Group>
               <Form.Group id="password">

@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 // import { UserAuth } from '../context/AuthContext'
@@ -7,14 +6,14 @@ import { Icon } from 'react-icons-kit';
 // import {user as profileIcon} from 'react-icons-kit/typicons/user'
 // import { user as profileIcon } from 'react-icons-kit/feather/user';
 import {ic_person as profileIcon} from 'react-icons-kit/md/ic_person'
-import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
+// import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
 import {ic_shopping_cart_outline} from 'react-icons-kit/md/ic_shopping_cart_outline'
 // import { ShoppingCart } from './ShoppingCart'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Profile from './Profile';
 import { useNavigate } from 'react-router-dom';
 // import From from react-bootstrap
-import { Form } from 'react-bootstrap';
+// import { Form } from 'react-bootstrap';
 import { UserAuth } from '../context/AuthContext';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/config';
@@ -57,7 +56,8 @@ export const Navbar = () => {
     localStorage.getItem('dark-mode') === 'true'
   );
   useEffect(() => {
-    localStorage.setItem('dark-mode', dark);
+    localStorage.setItem('dark-mode', dark.toString());
+    // localStorage.setItem('dark-mode', dark);
     // if dark-mode is true, add dark class to body
     if (dark) {
       document.body.classList.add('dark');
@@ -92,8 +92,6 @@ export const Navbar = () => {
               size={24}
             />
           </span>
-          <span>{}</span>
-
         </div>
       )}
       {user && (
@@ -131,12 +129,8 @@ export const Navbar = () => {
             />
           </span>
           <span className="cart-menu-btn">
-            {totalProducts >0 && <span className="cart-menu-btn  cart-indicator">
-              {totalProducts}
-            </span>
-            }
+            <span className="cart-menu-btn cart-indicator">{totalProducts}</span>
           </span>
-          {/* <span><button className='logout-btn' onClick={Logout}>Logout</button></span> */}
         </div>
       )}
     </div>

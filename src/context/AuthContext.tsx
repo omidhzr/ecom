@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { createContext, FC, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
@@ -80,7 +81,9 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
   };
 
   const updateUser = async (name: string) => {
-    return await updateProfile(user, { displayName: name });
+    if (user) {
+      return await updateProfile(user, { displayName: name });
+    }
 
   };
 
@@ -108,11 +111,15 @@ export const AuthContextProvider = ({children}: AuthProviderProps) => {
   };
 
   const updateEmajl = async (email: string) => {
-    return await updateEmail(user, email);
+    if (user) {
+      return await updateEmail(user, email);
+    }
   };
 
   const updatePass = async (password:string) => {
+    if (user) {
     return await updatePassword(user, password);
+    } 
   };
 
   const removeUser = async (user : any) => {

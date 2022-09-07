@@ -5,7 +5,7 @@ import { minus } from 'react-icons-kit/feather/minus';
 import { auth, db } from '../config/config';
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
+// import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
 import {ecommerce_cart_remove} from 'react-icons-kit/linea/ecommerce_cart_remove'
 
 export const CartProduct = ({ cartProduct }: {

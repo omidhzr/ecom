@@ -218,10 +218,10 @@ const EditProducts = () => {
                       onClick={() => {
                         editProduct(
                           product.id,
-                      titleRef.current!.value,
-                      descRef.current!.value,
-                      priceRef.current!.value,
-                      imageRef.current!.value
+                      titleRef.current?.value,
+                      descRef.current?.value,
+                      priceRef.current?.value,
+                      imageRef.current?.value
                         );
                       }}
                     >

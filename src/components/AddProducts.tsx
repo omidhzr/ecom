@@ -41,7 +41,8 @@ const AddProducts = () => {
     // console.log(title, description, price);
     // console.log(image);
 
-    const storageRef = ref(storage, '/product-images/' + image!.name);
+    const storageRef = ref(storage, '/product-images/' + image?.name);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const uploadTask = uploadBytesResumable(storageRef, image!);
 
     uploadTask.on(

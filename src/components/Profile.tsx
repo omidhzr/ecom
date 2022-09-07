@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, Button, Alert } from 'react-bootstrap';
 import { UserAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [error, setError] = useState('');
@@ -36,12 +36,12 @@ const Profile = () => {
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
 
-          <strong>Name:</strong> {// @ts-ignore
-          user!.displayName}
+          <strong>Name:</strong> {
+          user?.displayName || 'Name'}
           <br />
 
-          <strong>Email:</strong> {// @ts-ignore
-          user!.email}
+          <strong>Email:</strong> {
+          user?.email || 'email@domain.com'}
           <Button
             onClick={()=> navigate("/update-profile")}
             className="btn btn-dark w-100 mt-2"

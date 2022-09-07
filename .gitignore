@@ -25,5 +25,6 @@ yarn-error.log*
 .vscode/
 
 .firebase/
+.firebase/hosting.YnVpbGQ.cache
 
 .env

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
-import Profile from "./components/Profile";
+// import Profile from "./components/Profile";
 import UpdateProfile from "./pages/UpdateProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider } from "./context/AuthContext";
-import AddProducts from "./components/AddProducts";
+// import AddProducts from "./components/AddProducts";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import { Navbar } from "./components/Navbar";
@@ -16,9 +16,10 @@ import { Contact } from "./pages/Contact";
 import PageNotFound from "./pages/PageNotFound";
 
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ApplicationProps {}
 
-const App: React.FunctionComponent<ApplicationProps> = (props) => {
+const App: React.FunctionComponent<ApplicationProps> = () => {
   
   return (
     
