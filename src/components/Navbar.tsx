@@ -1,56 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
-// import { UserAuth } from '../context/AuthContext'
 import { Icon } from 'react-icons-kit';
-// import {user as profileIcon} from 'react-icons-kit/typicons/user'
-// import { user as profileIcon } from 'react-icons-kit/feather/user';
 import { ic_person as profileIcon } from 'react-icons-kit/md/ic_person'
-// import { shoppingCart } from 'react-icons-kit/typicons/shoppingCart';
 import { ic_shopping_cart_outline } from 'react-icons-kit/md/ic_shopping_cart_outline'
-// import { ShoppingCart } from './ShoppingCart'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Profile from './Profile';
 import { useNavigate } from 'react-router-dom';
-// import From from react-bootstrap
-// import { Form } from 'react-bootstrap';
-import { UserAuth } from '../context/AuthContext';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../config/config';
-import { onSnapshot, collection } from 'firebase/firestore';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { fetchCart } from '../redux/features/cart/cartService';
+
 
 export const Navbar = () => {
 
   const [showProfile, setShowProfile] = useState(false);
   const handleShowProfile = () => setShowProfile(true);
   const handleCloseProfile = () => setShowProfile(false);
-  const [totalProducts, setTotalProducts] = useState<number>();
-  const { user } = UserAuth();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+
+  // for switch checked property
   const [isDarkMode, setDarkMode] = useState<boolean>(
     localStorage.getItem('dark-mode') === 'true'
   );
-
-  //get number of items (quantity) in users cart
-  function GetNumberOfCartItems() {
-    useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          onSnapshot(collection(db, 'Cart ' + user.uid), (snapshot) => {
-            let total = 0;
-            snapshot.forEach((doc) => {
-              total += doc.data().qty;
-            });
-            setTotalProducts(total);
-          });
-        }
-      });
-    }, []);
-  }
-  GetNumberOfCartItems();
-  // console.log('totalProducts: ' + totalProducts);
 
   const [dark, setDark] = useState<boolean>(
     localStorage.getItem('dark-mode') === 'true'
@@ -71,6 +45,23 @@ export const Navbar = () => {
     setDarkMode(checked);
   };
 
+  const user = useAppSelector((state) => state.authReducer.user);
+
+  //get the user email from redux store
+  const userEmail = useAppSelector((state) => state.authReducer.user?.email);
+  // console.log('userEmail: ' + userEmail);
+  // get the cart products from redux store cartReducer
+  useEffect(() => {
+    if (userEmail !== null && userEmail !== undefined && userEmail !== '') {
+      dispatch(fetchCart(userEmail));
+    }
+  }, [dispatch, userEmail]);
+
+  // get the cart products from redux store cartReducer
+  const cartItems = useAppSelector((state) => state.cartReducer.cartItems);
+  // console.log(cartItems.length);
+
+
   return (
     <div className="navbox">
       <div className="left-side">
@@ -78,10 +69,9 @@ export const Navbar = () => {
           <img src={logo} alt="" />
         </Link>
       </div>
-      {!user && (
+      {user === null && (
         <div className="right-side">
           <span>
-            {/*  show the login icon and when clicked navigate to login page */}
             <Icon icon={profileIcon} onClick={() => navigate('/login')} size={24} />
           </span>
           <span>
@@ -97,10 +87,7 @@ export const Navbar = () => {
       {user && (
         <div className="right-side">
           <span>
-            <Icon onClick={handleShowProfile} icon={profileIcon} size={24}>
-              {user.displayName}
-            </Icon>
-            {/* when the Icon is clicked, the Profile component is rendered in the Offcanvas component */}
+            <Icon onClick={handleShowProfile} icon={profileIcon} size={24} />
             <Offcanvas id='offcanvas' show={showProfile} onHide={handleCloseProfile} placement={'end'}>
               <Offcanvas.Header closeButton>
               </Offcanvas.Header>
@@ -129,10 +116,15 @@ export const Navbar = () => {
             />
           </span>
           <span className="cart-menu-btn">
-            <span className="cart-menu-btn cart-indicator">{totalProducts}</span>
+            {cartItems.length > 0 && cartItems.length !== undefined && (
+              <span className="cart-indicator">{cartItems.length}</span>
+            )}
           </span>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
+
+

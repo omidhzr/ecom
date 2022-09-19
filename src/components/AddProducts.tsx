@@ -8,9 +8,7 @@ const AddProducts = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
-  // define state for image with type of file
   const [image, setImage] = useState<File | null>(null);
-  // const [image, setImage] = useState<File>(null);
   const [imageError, setImageError] = useState<string>('');
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [uploadError, setUploadError] = useState<string>('');
@@ -72,7 +70,6 @@ const AddProducts = () => {
               const fileInput = document.getElementById('file') as HTMLInputElement;
               fileInput.value = '';
 
-              // document.getElementById("file").innerText = "";
               setImageError('');
               setUploadError('');
               setTimeout(() => {

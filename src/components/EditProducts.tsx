@@ -11,9 +11,8 @@ import {
 import { ref, deleteObject } from 'firebase/storage';
 
 const EditProducts = () => {
-  // set state of products with type
+
   const [products, setProducts] = useState<any>([]);
-  // const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [edit, setEdit] = useState<boolean>(false);
@@ -24,7 +23,6 @@ const EditProducts = () => {
   const descRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const [pid, setPid] = useState<string>('');
-  // const [addProductsButtonClicked, setAddProducts] = useState<boolean>(false);
 
   const getProducts = async () => {
     setLoading(true);

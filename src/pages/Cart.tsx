@@ -1,42 +1,44 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { useState, useEffect } from 'react';
-import { auth, db } from '../config/config';
-import { onSnapshot, collection } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartProduct } from '../components/CartProduct';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { fetchCart } from '../redux/features/cart/cartService';
 
-const Cart = () => {
-  // state of cart products
-  const [cartProducts, setCartProducts] = useState([]);
+export const Cart = () => {
+
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const userEmail = useAppSelector((state) => state.authReducer.user?.email);
+  // console.log('userEmail: ' + userEmail);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        onSnapshot(collection(db, 'Cart ' + user.uid), (snapshot) => {
-          // eslint-disable-next-line no-empty-pattern
-          const newCartProducts: any = snapshot.docs.map((doc) => ({
-            ID: doc.id,
-            ...doc.data()
-          }));
+    if (userEmail !== null && userEmail !== undefined && userEmail !== '') {
+      dispatch(fetchCart(userEmail));
+    }
+  }, [dispatch, userEmail]);
 
-          setCartProducts(newCartProducts);
-          // console.log("cart products: " + cartProducts);
-        });
-      } else {
-        console.log('user is not signed in to retrieve cart');
-      }
-    });
-  }, []);
 
-  //   CartProducts();
-  // console.log(cartProducts);
+  const cartItems = useAppSelector((state) => state.cartReducer.cartItems);
+  // console.log(cartItems.length);
 
   return (
     <>
       <br></br>
-      {cartProducts.length > 0 && (
+      {/* if cart is empty then show this message to user "No products in the cart"*/}
+      {cartItems?.length === 0 && (
+        <div className="container-fluid">
+          <h1 className="text-center">Cart</h1>
+          <div className="products-box">
+            <h1 className="text-center">No products in the cart</h1>
+          </div>
+          <div className="text-center">
+            <Link to="/" className="btn btn-outline-dark"> Continue Shopping </Link>
+          </div>
+        </div>
+      )}
+      {cartItems?.length > 0 && (
         <>
           <div className="container-fluid">
             <div className="row">
@@ -59,7 +61,7 @@ const Cart = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {cartProducts.map((product: any) => (
+                          {cartItems.map((product: any) => (
                             <CartProduct key={product.ID} cartProduct={product} />
                           ))}
                         </tbody>
@@ -71,7 +73,7 @@ const Cart = () => {
                       <div className="col-md-12">
 
                         <div className="footer-total">
-                          <strong><h3>Total: {cartProducts.reduce((acc: any, item: any) => acc + item.totalProductPrice, 0)}</h3></strong>
+                          <strong><h3>Total: {cartItems.reduce((acc: any, item: any) => acc + item.totalPrice, 0)}</h3></strong>
                         </div>
 
                         <div className="footer-checkout-btn">
@@ -85,21 +87,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-
         </>
-      )}
-      {/* if cart is empty then show this message to user "No products in the cart"
-      // else show the cart products */}
-      {cartProducts.length === 0 && (
-        <div className="container-fluid">
-          <h1 className="text-center">Cart</h1>
-          <div className="products-box">
-            <h1 className="text-center">No products in the cart</h1>
-          </div>
-          <div className="text-center">
-            <Link to="/" className="btn btn-outline-dark"> Continue Shopping </Link>
-          </div>
-        </div>
       )}
     </>
   );

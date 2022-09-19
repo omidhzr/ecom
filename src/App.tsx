@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Signup } from "./pages/Signup";
@@ -14,12 +14,30 @@ import Admin from "./pages/Admin";
 import { Navbar } from "./components/Navbar";
 import { Contact } from "./pages/Contact";
 import PageNotFound from "./pages/PageNotFound";
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/config";
+import { useAppDispatch } from "./redux/store";
+import { logOut } from "./redux/features/auth/authService";
+import { setUser } from "./redux/features/auth/authSlice";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ApplicationProps { }
 
 const App: React.FunctionComponent<ApplicationProps> = () => {
+  const dispatch = useAppDispatch();
+
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (userAuth) => {
+      if (userAuth) {
+        // The user logged in / was logged in
+        dispatch(setUser(userAuth));
+      } else {
+        // The user logged out
+        dispatch(logOut());
+      }
+    });
+  }, [dispatch]);
 
   return (
 

@@ -2,76 +2,38 @@ import React from 'react';
 import { Icon } from 'react-icons-kit';
 import { plus } from 'react-icons-kit/feather/plus';
 import { minus } from 'react-icons-kit/feather/minus';
-import { auth, db } from '../config/config';
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-// import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline'
 import { ecommerce_cart_remove } from 'react-icons-kit/linea/ecommerce_cart_remove'
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { decreaseQuantity, deleteFromCart, increaseQuantity } from '../redux/features/cart/cartService';
 
-export const CartProduct = ({ cartProduct }: {
-  cartProduct: any;
-}) => {
+export const CartProduct = ({ cartProduct }: { cartProduct: any; }) => {
+  const dispatch = useAppDispatch();
+  const email = useAppSelector((state) => state.authReducer.user?.email);
+
   const handleCartIncrease = () => {
-    cartProductIncrease(cartProduct);
+    // dispatch increase action
+    if (email !== null && email !== undefined && email !== '') {
+      // console.log(email, cartProduct.ID);
+      dispatch(increaseQuantity({ cartProduct, email }));
+    }
   };
 
   const handleCartDecrease = () => {
-    cartProductDecrease(cartProduct);
+    if (email !== null && email !== undefined && email !== '') {
+      dispatch(decreaseQuantity({ cartProduct, email }));
+    }
   };
 
   const handleCartDelete = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
-      }
-    });
-  };
 
-  let Product: any;
-
-  // cart product increase function
-  const cartProductIncrease = (cartProduct: any) => {
-    // console.log(cartProduct);
-    Product = cartProduct;
-    Product.qty = Product.qty + 1;
-    Product.totalProductPrice = Product.qty * Product.price;
-    // updating in database
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
-      } else {
-        console.log('user is not logged in to increment');
-      }
-    });
-  };
-
-  // cart product decrease functionality
-  const cartProductDecrease = (cartProduct: any) => {
-    Product = cartProduct;
-    // check if qty is less than 1 if yes then delete the product
-    if (Product.qty <= 1) {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          await deleteDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID));
-
-        } else {
-          console.log('user is not logged in to delete');
-        }
-      });
-    } else {
-      Product.qty = Product.qty - 1;
-      Product.totalProductPrice = Product.qty * Product.price;
-      // updating in database
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          await setDoc(doc(db, 'Cart ' + user.uid, cartProduct.ID), Product);
-
-        } else {
-          console.log('user is not logged in to decrement');
-        }
-      });
+    //dispatch deleteFromCart action
+    if (email !== null && email !== undefined && email !== '') {
+      dispatch(deleteFromCart({ cartProduct, email }));
     }
+
   };
+
+
   return (
     <tr>
       <td>
@@ -96,7 +58,7 @@ export const CartProduct = ({ cartProduct }: {
             <input
               type="text"
               className="form-control text-center disabled"
-              value={cartProduct.qty}
+              value={cartProduct.quantity}
               readOnly
             />
             <div className="input-group-append">
@@ -111,7 +73,7 @@ export const CartProduct = ({ cartProduct }: {
           </div>
         </div>
       </td>
-      <td>${cartProduct.totalProductPrice}</td>
+      <td>${cartProduct.totalPrice}</td>
       <td>
         <div className="delete-btn">
           <button

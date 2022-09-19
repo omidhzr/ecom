@@ -1,18 +1,21 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
-import { UserAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../redux/store';
+import { useAppDispatch } from '../redux/store';
+import { updateProfilee, updateEmaill, updatePass } from '../redux/features/auth/authService';
 
 const UpdateProfile = () => {
   const emailRef = useRef() as MutableRefObject<HTMLInputElement>;
   const passwordRef = useRef() as MutableRefObject<HTMLInputElement>;
   const passwordConfirmRef = useRef() as MutableRefObject<HTMLInputElement>;
   const nameRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const { user, updatePass, updateEmajl, updateUser } = UserAuth();
-  const [error, setError] = useState<string>('');
+  const [errorMsg, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  const user = useAppSelector((state: any) => state.authReducer.user);
+  const dispatch = useAppDispatch();
+  const { error } = useAppSelector((state: any) => state.authReducer);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function handleSubmit(e: any) {
@@ -21,33 +24,22 @@ const UpdateProfile = () => {
       return setError('Passwords do not match');
     }
 
-    const promises = [];
     setLoading(true);
     setError('');
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+
+    // if the value of the inputs for name, email and password are not equal to the current user's displayName, email and password, then update the user's displayName, email and password
     if (nameRef.current.value !== user.displayName) {
-      promises.push(updateUser(nameRef.current.value));
+      dispatch(updateProfilee(nameRef.current.value));
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     if (emailRef.current.value !== user.email) {
-      promises.push(updateEmajl(emailRef.current.value));
+      dispatch(updateEmaill(emailRef.current.value));
     }
     if (passwordRef.current.value) {
-      promises.push(updatePass(passwordRef.current.value));
+      console.log(passwordRef.current.value);
+      dispatch(updatePass(passwordRef.current.value));
     }
 
-    Promise.all(promises)
-      .then(() => {
-        navigate('/');
-      })
-      .catch((error) => {
-        setError('Failed to update the account! ' + error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    navigate('/');
   }
 
   return (
@@ -55,6 +47,7 @@ const UpdateProfile = () => {
       {user && <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Update Profile</h2>
+          {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="name">
@@ -63,7 +56,7 @@ const UpdateProfile = () => {
                 type="text"
                 ref={nameRef}
                 required
-                defaultValue={user?.displayName || ''}
+                defaultValue={user.displayName}
               />
             </Form.Group>
             <Form.Group id="email">
@@ -72,7 +65,7 @@ const UpdateProfile = () => {
                 type="email"
                 ref={emailRef}
                 required
-                defaultValue={user?.email || ''}
+                defaultValue={user.email}
               />
             </Form.Group>
             <Form.Group id="password">

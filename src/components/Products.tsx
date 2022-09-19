@@ -1,11 +1,10 @@
 import React, { memo } from 'react';
 import { Product } from './Product';
 
-export const Products = ({ products, addToCart }: { products: any, addToCart: any }) => {
-  // console.log(products);
+export const Products = ({ products }: { products: any }) => {
 
   return products.map((produkt: { ID: React.Key | null | undefined; }) => (
-    <Product key={produkt.ID} product={produkt} addToCart={addToCart} />
+    <Product key={produkt.ID} product={produkt} />
   ));
 };
 

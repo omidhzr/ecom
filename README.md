@@ -59,10 +59,11 @@
 
 List of frameworks/libraries used.
 
-- [![React][react.js]][react-url]
-- [![TypeScript][typescriptlang]][typescript-url]
-- [![Bootstrap][bootstrap.com]][bootstrap-url]
-- [![Firebase][firebase.come]][firebase-url]
+-   [![React][react.js]][react-url]
+-   [![TypeScript][typescriptlang]][typescript-url]
+-   [![Bootstrap][bootstrap.com]][bootstrap-url]
+-   [![Firebase][firebase.come]][firebase-url]
+-   [![redux-toolkit][redux-toolkit]][redux-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -72,16 +73,16 @@ List of frameworks/libraries used.
 
 ### Prerequisites
 
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
-  Or
-  <br/>
-- yarn
-  ```sh
-  npm install --global yarn
-  ```
+-   npm
+    ```sh
+    npm install npm@latest -g
+    ```
+    Or
+    <br/>
+-   yarn
+    ```sh
+    npm install --global yarn
+    ```
 
 ### Installation
 
@@ -89,26 +90,26 @@ List of frameworks/libraries used.
 If you want to install and run the web app on your local machine you need to follow the instructions below
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/omidhzr/ecom
-   ```
+    ```sh
+    git clone https://github.com/omidhzr/ecom
+    ```
 2. Go to the project directory
-   ```sh
-   cd [to the directory that you have cloned the project in]
-   cd ecom
-   ```
+    ```sh
+    cd [to the directory that you have cloned the project in]
+    cd ecom
+    ```
 3. Install NPM packages
-   ```sh
-   npm install
-   ```
+    ```sh
+    npm install
+    ```
 4. Run
-   ```sh
-   npm start
-   ```
+    ```sh
+    npm start
+    ```
 5. Visit
-   ```sh
-   localhost:3000/
-   ```
+    ```sh
+    localhost:3000/
+    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,23 +129,23 @@ You can remove or buy several of the same items in your shopping cart as well an
 
 ## Roadmap
 
-- [x] Add Home Page
-- [x] Add Authentication
-- [x] Add and retrieve Products to/from Firebase
-- [x] Add Admin page to support adding and retrieval
-- [x] Convert to Typescript
-- [x] Add Dark Mode theme
-- [ ] Add Shopping Cart
-  - [x] a simple shopping cart to add and delete products from the home page
-  - [ ] Add Checkout and Payment using Paypal / Stripe / Swish
-- [ ] Use redux for state management
-- [ ] Make a Proxy API using node express to call firebase admin sdk
-  - [ ] protect the admin page using role based auth
-- [ ] Employ Lazy Loading
-- [ ] Write tests for components
-- [ ] Use Docker to host the Server
-- [ ] Restructure and Refactor the codebase
-- [ ] Add third-party SignIn process (via google) so that the user do not need to register with us
+-   [x] Add Home Page
+-   [x] Add Authentication
+-   [x] Add and retrieve Products to/from Firebase
+-   [x] Add Admin page to support adding and retrieval
+-   [x] Convert to Typescript
+-   [x] Add Dark Mode theme
+-   [ ] Add Shopping Cart
+    -   [x] a simple shopping cart to add and delete products from the home page
+    -   [ ] Add Checkout and Payment using Paypal / Stripe / Swish
+-   [x] Use redux for state management
+-   [ ] Make a Proxy API using node express to call firebase admin sdk
+    -   [ ] protect the admin page using role based auth
+-   [ ] Implement Lazy Loading
+-   [ ] Write tests for components
+-   [ ] Use Docker to host the Server
+-   [ ] Restructure and Refactor the codebase
+-   [ ] Add third-party SignIn process (via google)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -172,15 +173,15 @@ Project Link: [https://github.com/omidhzr/ecom](https://github.com/omidhzr/ecom)
 
 ## Acknowledgments
 
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-- [Malven's Grid Cheatsheet](https://grid.malven.co/)
-- [Img Shields](https://shields.io)
-- [GitHub Pages](https://pages.github.com)
-- [Font Awesome](https://fontawesome.com)
-- [Google fonts](https://fonts.google.com)
-- [React Icons Kit](https://react-icons-kit.vercel.app/)
-- [React Icons](https://react-icons.github.io/react-icons/search)
+-   [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+-   [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
+-   [Malven's Grid Cheatsheet](https://grid.malven.co/)
+-   [Img Shields](https://shields.io)
+-   [GitHub Pages](https://pages.github.com)
+-   [Font Awesome](https://fontawesome.com)
+-   [Google fonts](https://fonts.google.com)
+-   [React Icons Kit](https://react-icons-kit.vercel.app/)
+-   [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -198,3 +199,5 @@ Project Link: [https://github.com/omidhzr/ecom](https://github.com/omidhzr/ecom)
 [bootstrap-url]: bootstrap.com
 [firebase-url]: firebase.come
 [firebase.come]: https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase
+[redux-toolkit]: https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white
+[redux-url]: https://redux-toolkit.js.org

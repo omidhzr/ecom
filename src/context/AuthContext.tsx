@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, FC, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth } from '../config/config';
 import {
   createUserWithEmailAndPassword,
@@ -18,7 +18,7 @@ import {
 } from 'firebase/auth';
 
 
-// set types for context based on the functions we need to use in the app
+// set types for the context
 export type AuthContextType = {
   loggedIn: boolean;
   user: User | null;
@@ -103,7 +103,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
 
 
   const logOut = async () => {
-    return await signOut(auth).then(() => { setUserLoggedIn(false); });
+    return await signOut(auth);
   };
 
   const forgotPassword = async (email: string) => {

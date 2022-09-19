@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { signIn } from '../redux/features/auth/authService';
+
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const dispatch = useAppDispatch();
 
-  const login = async (e: any) => {
+  const loginToApp = async (e: any) => {
     e.preventDefault();
-    setError('');
-    try {
-      await signIn(email, password);
+
+    // dispatch signIn
+    const response = await dispatch(signIn({ submittedEmail: email, submittedPassword: password }));
+    // if there is no error, navigate to home page
+    if (response.payload) {
       navigate('/');
-      // navigate('../');
-    } catch (error: any) {
-      setError(error.message);
     }
+
   };
+
+  const error = useAppSelector((state) => state.authReducer.error);
 
   return (
     <div className="container">
@@ -29,7 +32,7 @@ export const Login = () => {
       <br />
       {error && <Alert variant="danger">{error}</Alert>}
       <br />
-      <form autoComplete="off" className="form-group" onSubmit={login}>
+      <form autoComplete="off" className="form-group" onSubmit={loginToApp}>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -37,6 +40,7 @@ export const Login = () => {
           required
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          placeholder="demo@test.com"
         />
         <br />
         <label htmlFor="password">Password</label>
@@ -46,6 +50,7 @@ export const Login = () => {
           required
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          placeholder="password"
         />
         <br />
         <button type="submit" className="btn btn-success btn-md mybtn">
@@ -65,6 +70,4 @@ export const Login = () => {
     </div>
   );
 };
-
-
 

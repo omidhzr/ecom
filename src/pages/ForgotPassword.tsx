@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import { sendResetEmail } from '../redux/features/auth/authService';
+import { useAppDispatch } from '../redux/store';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -8,12 +10,14 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const { forgotPassword } = UserAuth();
+  const dispatch = useAppDispatch();
 
   const resetPassword = async (e: any) => {
     e.preventDefault();
     setError('');
     try {
-      await forgotPassword(email);
+      dispatch(sendResetEmail(email));
+      // await forgotPassword(email);
       setMessage('An email has been sent! Please check your email (and spams) to reset the password!');
       setTimeout(
         function () {
