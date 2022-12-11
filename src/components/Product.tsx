@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Icon } from 'react-icons-kit';
 // import { ecommerce_basket_plus } from 'react-icons-kit/linea/ecommerce_basket_plus'

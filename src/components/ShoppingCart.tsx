@@ -1,5 +1,6 @@
 // Work in progress
 //Is not used yet
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import React from 'react';
 

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, User, updateProfile, sendPasswordResetEmail, updatePassword, deleteUser, updateEmail, signOut } from 'firebase/auth';
-import { auth } from '../../../config/config';
+import { auth, db } from '../../../config/config';
 import { setUser } from './authSlice';
+import { setDoc, collection, getDoc, updateDoc, doc, getDocs, deleteDoc } from 'firebase/firestore';
+
 
 interface userData {
     submittedName?: string;
@@ -82,6 +84,25 @@ export const sendResetEmail = createAsyncThunk<User | null, string, { rejectValu
     await sendPasswordResetEmail(auth, email);
     return null;
 });
+
+// make a thunk for sendMessage for contact page
+export const sendMessage = createAsyncThunk('user/sendMessage', async (payload: any) => {
+    const { submittedName, submittedEmail, submittedMessage } = payload;
+
+    const message = {
+        id: Math.random().toString(36).substring(2),
+        email: submittedEmail,
+        name: submittedName,
+        message: submittedMessage,
+    };
+
+    const messageRef = doc(db, 'Messages', new Date().toString());
+
+    await setDoc(messageRef, message );
+
+    return null;
+});
+
 
 
 

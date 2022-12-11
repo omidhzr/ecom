@@ -1,14 +1,18 @@
-// create a store with the reducers
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import productReducer from "./features/product/productSlice";
 import cartReducer from "./features/cart/cartSlice";
+import orderReducer from "./features/order/orderSlice";
+import adminReducer from "./features/admin/adminSlice";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
 const rootReducer = combineReducers({
   cartReducer,
   productReducer,
   authReducer,
+  orderReducer,
+  adminReducer,
 });
 
 const store = configureStore({

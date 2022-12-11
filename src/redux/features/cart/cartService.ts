@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from '../../../config/config';
 import { setDoc, collection, getDoc, updateDoc, doc, getDocs, deleteDoc } from 'firebase/firestore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -15,10 +16,10 @@ export const addToCart = createAsyncThunk(
                 quantity: 1,
                 totalPrice: product.price * 1
             };
-            // console.log(Item)
+            // console.debug(Item)
 
             // const Product = product;
-            // console.log(email);
+            // console.debug(email);
             // make a document with email as the document id in the Carts collection in firestore
             // add the product in the collection connected to the document
             // the schema should look like this:
@@ -44,23 +45,23 @@ export const addToCart = createAsyncThunk(
             // if no then make a document with the email as the document id
             // then add the product to the collection
             const cart = await getDoc(doc(db, 'Carts', email));
-            // console.log(cart.id);
+            // console.debug(cart.id);
             if (cart.id === email) {
-                // console.log('cart exists');
+                // console.debug('cart exists');
                 // add the product to the collection
                 // check if the product already exists in the collection
                 // if yes then increase the amount of the product
                 // if no then add the product
                 const cartProduct = await getDoc(doc(db, 'Carts', email, 'cartItems', Item.ID));
-                // console.log(cartProduct);
+                // console.debug(cartProduct);
                 if (cartProduct.exists()) {
-                    // console.log('product already exists in cart');
+                    // console.debug('product already exists in cart');
                     Item.quantity = cartProduct.data().quantity + 1;
                     Item.totalPrice = Item.quantity * Item.price;
                     // updating in database
                     await updateDoc(doc(db, 'Carts', email, 'cartItems', Item.ID), Item);
                 } else {
-                    // console.log('product does not exist in cart');
+                    // console.debug('product does not exist in cart');
                     // add it to the collection
                     await setDoc(doc(db, 'Carts', email, 'cartItems', Item.ID), Item);
                 }
@@ -71,14 +72,14 @@ export const addToCart = createAsyncThunk(
 export const fetchCart = createAsyncThunk(
     'cart/fetchCart',
     async (email: any) => {
-        // console.log(email);
+        // console.debug(email);
         // get the document with the email as the document id
         // get the collection connected to the document
         // return the collection
         const cart = await getDoc(doc(db, 'Carts', email));
-        // console.log(cart.id);
+        // console.debug(cart.id);
         if (cart.id === email) {
-            // console.log('cart exists');
+            // console.debug('cart exists');
             // get the collection
             const cartItems = await getDocs(collection(db, 'Carts', email, 'cartItems'));
             const cartItemsArray: any = [];
@@ -89,8 +90,8 @@ export const fetchCart = createAsyncThunk(
                     ...data
                 });
             }
-            // console.log(cartItemsArray);
-            // console.log(cartItems);
+            // console.debug(cartItemsArray);
+            // console.debug(cartItems);
             return cartItemsArray;
         }
     });
@@ -99,20 +100,41 @@ export const deleteFromCart = createAsyncThunk(
     'cart/deleteFromCart',
     async (payload: any) => {
         const { cartProduct, email } = payload;
-        // console.log(cartProduct);
-        // console.log(email);
+        // console.debug(cartProduct);
+        // console.debug(email);
 
         // get the document with the email as the document id
         // then get the collection connected to the document
         // delete the product from the collection and return
         const cart = await getDoc(doc(db, 'Carts', email));
-        // console.log(cart.id);
+        // console.debug(cart.id);
         if (cart.id === email) {
-            // console.log('cart exists');
+            // console.debug('cart exists');
             // delete the product from the collection
             await deleteDoc(doc(db, 'Carts', email, 'cartItems', cartProduct.ID));
             return cartProduct.ID;
 
+        }
+    }
+);
+
+export const deleteAllFromCart = createAsyncThunk(
+    'cart/deleteAllFromCart',
+    async (email: any) => {
+        // console.debug(email);
+        // get the document with the email as the document id
+        // then get the collection connected to the document
+        // delete the collection and return
+        const cart = await getDoc(doc(db, 'Carts', email));
+        // console.debug(cart.id);
+        if (cart.id === email) {
+            // console.debug('cart exists');
+            // delete the collection
+            const cartItems = await getDocs(collection(db, 'Carts', email, 'cartItems'));
+            for (const snap of cartItems.docs) {
+                await deleteDoc(doc(db, 'Carts', email, 'cartItems', snap.id));
+            }
+            return email;
         }
     }
 );
@@ -122,21 +144,21 @@ export const increaseQuantity = createAsyncThunk(
     'cart/increaseQuantity',
     async (payload: any) => {
         const { cartProduct, email } = payload;
-        // console.log(cartProduct);
-        // console.log(email);
+        // console.debug(cartProduct);
+        // console.debug(email);
 
         // get the document with the email as the document id
         // get the collection connected to the document
         // increase the quantity of the product in the collection
         const cart = await getDoc(doc(db, 'Carts', email));
-        // console.log(cart.id);
+        // console.debug(cart.id);
         if (cart.id === email) {
-            // console.log('cart exists');
+            // console.debug('cart exists');
 
             const cartItem = await getDoc(doc(db, 'Carts', email, 'cartItems', cartProduct.ID));
             //  check if the product exists in the cart
             if (cartItem.exists()) {
-                // console.log('product already exists in cart');
+                // console.debug('product already exists in cart');
                 // increase the quantity of the product in the collection
                 const Item = {
                     ...cartProduct,
@@ -157,16 +179,16 @@ export const decreaseQuantity = createAsyncThunk(
     'cart/decreaseQuantity',
     async (payload: any) => {
         const { cartProduct, email } = payload;
-        // console.log(cartProduct);
-        // console.log(email);
+        // console.debug(cartProduct);
+        // console.debug(email);
 
         // get the document with the email as the document id
         // get the collection connected to the document
         // decrease the quantity of the product in the collection
         const cart = await getDoc(doc(db, 'Carts', email));
-        // console.log(cart.id);
+        // console.debug(cart.id);
         if (cart.id === email) {
-            // console.log('cart exists');
+            // console.debug('cart exists');
             // decrease the quantity of the product in the collection
             // check if the quantity is 1
             // if yes then delete the product from the collection
@@ -174,7 +196,7 @@ export const decreaseQuantity = createAsyncThunk(
             const cartItem = await getDoc(doc(db, 'Carts', email, 'cartItems', cartProduct.ID));
             //  check if the product exists in the cart
             if (cartItem.exists()) {
-                // console.log('product already exists in cart');
+                // console.debug('product already exists in cart');
                 // decrease the quantity of the product in the collection
                 const Item = {
                     ...cartProduct,

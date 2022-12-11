@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
 import * as authServices from './authService';
@@ -8,6 +9,7 @@ interface AuthState {
     isLoggedIn: boolean;
     isLoading: boolean;
     error: string | undefined | null;
+    showPassword: boolean;
 }
 
 // the initial state
@@ -16,6 +18,7 @@ const initialState: AuthState = {
     isLoggedIn: false,
     isLoading: false,
     error: null,
+    showPassword: false,
 };
 
 // a slice of state for auth
@@ -29,6 +32,9 @@ export const authSlice = createSlice({
         },
         clearError: (state) => {
             state.error = null;
+        },
+        setShowPassword: (state, action) => {
+            state.showPassword = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -130,12 +136,26 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.error = action.error.message;
         });
+
+        builder.addCase(authServices.sendMessage.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(authServices.sendMessage.fulfilled, (state, action) => {
+            state.user = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        });
+        builder.addCase(authServices.sendMessage.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error.message;
+        });
+
     }
 });
 
 
 // export the actions
-export const { setUser, clearError } = authSlice.actions;
+export const { setUser, clearError, setShowPassword } = authSlice.actions;
 
 
 // export currentUser from the state as a selector using proper types

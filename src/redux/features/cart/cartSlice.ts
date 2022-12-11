@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 import * as cartServices from './cartService';
 
@@ -69,6 +70,19 @@ export const cartSlice = createSlice({
       state.error = action.error.message;
     }
     );
+    builder.addCase(cartServices.deleteAllFromCart.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(cartServices.deleteAllFromCart.fulfilled, (state, _action) => {
+      state.cartItems = [];
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(cartServices.deleteAllFromCart.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
     builder.addCase(cartServices.increaseQuantity.pending, (state) => {
       state.isLoading = true;
     }

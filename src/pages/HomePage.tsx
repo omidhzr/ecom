@@ -1,17 +1,12 @@
-import React, { useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 import { MemoProducts } from '../components/Products';
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { fetchProducts } from '../redux/features/product/productService';
 
-export const Home = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  products: any;
+}
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
-
-  // use selector to get products from redux store
-  const products = useAppSelector((state) => state.productReducer.products);
+export const HomePage = ({ products }: Props) => {
 
 
   return (

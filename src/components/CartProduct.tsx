@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Icon } from 'react-icons-kit';
 import { plus } from 'react-icons-kit/feather/plus';
